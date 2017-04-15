@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">Family Map</string>
+
+    <string name="serverHost">Server Host:</string>
+    <string name="serverPort">Server Port:</string>
+    <string name="userName">User Name:</string>
+    <string name="password">Password:</string>
+    <string name="firstNameLogin">First Name:</string>
+    <string name="lastNameLogin">Last Name:</string>
+    <string name="email">Email:</string>
+    <string name="genderLogin">Gender:</string>
+    <string name="genderMessage">Choose an option from below</string>
+    <string name="female">female</string>
+    <string name="male">male</string>
+
+    <string name="LOGIN">LOGIN</string>
+    <string name="REGISTER">REGISTER</string>
+
+    <string name="loginToast">Clicked the login button!\nGotcha!</string>
+    <string name="registerToast">Clicked the register button!\nGotcha!</string>
+
+    <string name="lifeStoryLinesHeader">Life Story Lines</string>
+    <string name="lifeStoryLinesShow">SHOW LIFE STORY LINES</string>
+    <string name="familyTreeLinesHeader">Family Tree Lines</string>
+    <string name="familyTreeLinesShow">SHOW TREE LINES</string>
+    <string name="spouseLinesHeader">Spouse Lines</string>
+    <string name="spouseLinesShow">SHOW SPOUSE LINES</string>
+    <string name="mapTypeHeader">Map Type</string>
+    <string name="mapTypeBackgroundDisplay">BACKGROUND DISPLAY ON MAP</string>
+    <string name="resyncDataHeader">Re-sync Data</string>
+    <string name="fromFMService">FROM FAMILYMAP SERVICE</string>
+    <string name="logout">Logout</string>
+    <string name="returnsToLoginScreen">RETURNS TO LOGIN SCREEN</string>
+
+
+    <string name="birthEvents">Birth Events</string>
+    <string name="birthEventsFilter">FILTER BY BIRTH EVENTS</string>
+    <string name="deathEvents">Death Events</string>
+    <string name="deathEventsFilter">FILTER BY DEATH EVENTS</string>
+    <string name="marriageEvents">Marriage Events</string>
+    <string name="marriageEventsFilter">FILTER BY MARRIAGE EVENTS</string>
+    <string name="graduationEvents">Graduation Events</string>
+    <string name="graduationEventsFilter">FILTER BY GRADUATION EVENTS</string>
+    <string name="jobEvents">Job Events</string>
+    <string name="jobEventsFilter">FILTER BY JOB EVENTS</string>
+    <string name="taxEvents">Tax Events</string>
+    <string name="taxEventsFilter">FILTER BY TAX EVENTS</string>
+    <string name="volunteerEvents">Volunteer Events</string>
+    <string name="volunteerEventsFilter">FILTER BY VOLUNTEER EVENTS</string>
+    <string name="babyEvents">Baby Events</string>
+    <string name="babyEventsFilter">FILTER BY BABY EVENTS</string>
+    <string name="couchEvents">Couch Events</string>
+    <string name="couchEventsFilter">FILTER BY COUCH EVENTS</string>
+    <string name="candyCrushEvents">Candy Crush Events</string>
+    <string name="candyCrushEventsFilter">FILTER BY CANDY CRUSH EVENTS</string>
+    <string name="netflixEvents">Netflix Events</string>
+    <string name="netflixEventsFilter">FILTER BY NETFLIX EVENTS</string>
+    <string name="plantEvents">Plant Events</string>
+    <string name="plantEventsFilter">FILTER BY PLANT EVENTS</string>
+    <string name="dentistEvents">Dentist Events</string>
+    <string name="dentistEventsFilter">FILTER BY DENTIST EVENTS</string>
+    <string name="retirementEvents">Retirement Events</string>
+    <string name="retirementEventsFilter">FILTER BY RETIREMENT EVENTS</string>
+    <string name="foodEvents">Food Events</string>
+    <string name="foodEventsFilter">FILTER BY FOOD EVENTS</string>
+
+
+    <string name="firstName">FIRST NAME</string>
+    <string name="lastName">LAST NAME</string>
+    <string name="gender">GENDER</string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>

@@ -1,0 +1,241 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginForm"
+        android:columnCount="2"
+        android:rowCount="8"
+        android:layout_weight="0.85">
+        <TextView
+            android:text="@string/serverHost"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:id="@+id/serverHostText"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"  />
+
+        <TextView
+            android:text="@string/serverPort"
+            android:id="@+id/serverPortText"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:textColor="#000000"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/userName"
+            android:id="@+id/userNameText"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/password"
+            android:id="@+id/passwordText"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/firstNameLogin"
+            android:id="@+id/firstNameText"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/lastNameLogin"
+            android:id="@+id/lastNameText"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/email"
+            android:id="@+id/emailText"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/genderLogin"
+            android:id="@+id/genderText"
+            android:textColor="#000000"
+            android:gravity="right|bottom"
+            android:paddingRight="10dp"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <TextView
+            android:text="@string/genderMessage"
+            android:id="@+id/genderMessageText"
+            android:textColor="#999990"
+            android:textSize="15dp"
+            android:gravity="left|bottom"
+            android:paddingRight="15dp"
+            android:paddingBottom="5dp"
+            android:layout_row="7"
+            android:layout_column="1"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="text"
+            android:text="x.x.x.x"
+            android:ems="2"
+            android:id="@+id/serverHostInput"
+            android:textColor="#999990"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="number"
+            android:text="8080"
+            android:id="@+id/serverPortInput"
+            android:textColor="#999990"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="text"
+            android:text="Enter name"
+            android:id="@+id/userNameInput"
+            android:textColor="#999990"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="textPassword"
+            android:text="Enter password"
+            android:id="@+id/passwordInput"
+            android:textColor="#999990"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="textPersonName"
+            android:text="Enter Name"
+            android:id="@+id/firstNameInput"
+            android:textColor="#999990"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="textPersonName"
+            android:text="Enter Last Name"
+            android:id="@+id/lastNameInput"
+            android:textColor="#999990"
+            android:layout_row="5"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+        <EditText
+            android:inputType="textEmailAddress"
+            android:text="Enter Email"
+            android:id="@+id/emailInput"
+            android:textColor="#999990"
+            android:layout_row="6"
+            android:layout_column="1"
+            android:background="@drawable/underline"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1" />
+
+
+    </GridLayout>
+
+    <RadioGroup
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="40dp">
+        <RadioButton
+            android:text="male"
+            android:textSize="16dp"
+            android:id="@+id/maleButton"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="0.85" />
+
+        <RadioButton
+            android:text="female"
+            android:textSize="16dp"
+            android:id="@+id/femaleButton"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="0.85" />
+    </RadioGroup>
+
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:id="@+id/loginRegisterButtons"
+        android:columnCount="2"
+        android:rowCount="1">
+
+        <Button
+            android:text="@string/LOGIN"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="85dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:id="@+id/loginButton" />
+
+        <Button
+            android:text="@string/REGISTER"
+            android:layout_gravity="left|center_vertical"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:id="@+id/registerButton" />
+    </GridLayout>
+</LinearLayout>
