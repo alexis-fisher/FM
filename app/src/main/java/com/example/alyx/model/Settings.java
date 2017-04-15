@@ -23,10 +23,6 @@ public class Settings {
     // Variable that accesses the model
     private Model model = Model.instanceOf();
 
-    // Colors
-    final String red = "RED";
-    final String green = "GREEN";
-    final String blue = "BLUE";
 
     // Options for Settings
     private boolean showLifeLines;
@@ -45,7 +41,6 @@ public class Settings {
         else {
             showLifeLines = true;
         }
-     //   model.
     }
 
     public void onOffFamilyTreeLines(){
@@ -64,5 +59,37 @@ public class Settings {
         else {
             showSpouseLines = true;
         }
+    }
+
+    public String getLifeLineColor() {
+        return lifeLineColor;
+    }
+
+    public void setLifeLineColor(String lifeLineColor) {
+        this.lifeLineColor = lifeLineColor;
+    }
+
+    public String getFamilyTreeLineColor() {
+        return familyTreeLineColor;
+    }
+
+    public void setFamilyTreeLineColor(String familyTreeLineColor) {
+        this.familyTreeLineColor = familyTreeLineColor;
+    }
+
+    public String getSpouseLineColor() {
+        return spouseLineColor;
+    }
+
+    public void setSpouseLineColor(String spouseLineColor) {
+        this.spouseLineColor = spouseLineColor;
+    }
+
+    public String getMapType() {
+        return mapType;
+    }
+
+    public void setMapType(String mapType) {
+        this.mapType = mapType;
     }
 }

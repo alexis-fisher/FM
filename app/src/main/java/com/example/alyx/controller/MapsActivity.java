@@ -1,20 +1,24 @@
-package com.example.alyx.view;
+package com.example.alyx.controller;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
+import com.example.alyx.model.Model;
 import com.example.alyx.server.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import server.model.Event;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Model model = Model.instanceOf();
+    private Event[] events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        events = model.getEvents();
+        for(Event e : events){
+            addMarker(e);
+        }
+
+    }
+
+    private void addMarker(Event e){
+        LatLng eventCoordinates = new LatLng(Integer.parseInt(e.getLatitude()), Integer.parseInt(e.getLongitude()));
+        mMap.addMarker(new MarkerOptions().position(eventCoordinates).title(e.getEventType()));
+
+        // Move camera to new marker
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(eventCoordinates));
     }
 }

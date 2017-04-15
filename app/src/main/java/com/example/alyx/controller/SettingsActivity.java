@@ -1,15 +1,30 @@
-package com.example.alyx.view;
+package com.example.alyx.controller;
 
+
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alyx.model.Settings;
 import com.example.alyx.server.R;
 
-public class SettingsActivity extends AppCompatActivity {
+
+public class SettingsActivity extends AppCompatActivity implements Caller {
+
+    public void resync(boolean toMapNext){
+        new ResyncTask().execute(this);
+
+    }
+    @Override
+    public FragmentManager getThisFragmentManager(){
+        return getThisFragmentManager();
+    }
+
     // Access the settings for the app
     private Settings settings = Settings.instanceOf();
 
@@ -24,11 +39,14 @@ public class SettingsActivity extends AppCompatActivity {
     private Spinner mSpouseLineSpinner;
     private Spinner mMapSpinner;
 
-    // Model Variables
-    private String lifeLineColor;
-    private String familyTreeLineColor;
-    private String spouseLineColor;
-    private String mapType;
+    // Colors
+    private final String red = "RED";
+    private final String green = "GREEN";
+    private final String blue = "BLUE";
+
+    // Logout & Resync buttons
+    private TextView mResync;
+    private TextView mLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +83,27 @@ public class SettingsActivity extends AppCompatActivity {
         mSpouseLineSpinner = (Spinner) findViewById(R.id.ddMenuSpouse);
         mMapSpinner = (Spinner) findViewById(R.id.ddMenuMap);
 
+        mResync = (TextView) findViewById(R.id.reSyncDataText);
+        mResync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ResyncTask().execute(SettingsActivity.this);
+            }
+        });
 
+        mLogout = (TextView) findViewById(R.id.logoutText);
+        mLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // go into login thing
+                printToast("Should be going to login screen now!");
+            }
+        });
     }
+
+    @Override
+    public void printToast(String toast){
+        Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -10,8 +10,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import server.handler.Converter;
-import server.model.Person;
 import server.model.Event;
+import server.model.Person;
 import server.request.FillRequest;
 import server.request.LoadRequest;
 import server.request.LoginRequest;
@@ -23,6 +23,7 @@ import server.result.LoadResult;
 import server.result.LoginResult;
 import server.result.PersonResult;
 import server.result.RegisterResult;
+
 
 
 /**
@@ -56,7 +57,7 @@ public class ServerProxy {
     private static ServerProxy _instance;
 
     private ServerProxy() {
-        host = "10.24.69.141";
+        host = "192.168.1.253";
         port = 8080;
         url = "http://" + host + ":" + port;
     }

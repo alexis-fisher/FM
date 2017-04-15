@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#E8E8EE"
-    tools:context="com.example.alyx.view.MainActivity">
+    tools:context="com.example.alyx.controller.MainActivity">
 
 
     <GridLayout
@@ -28,7 +28,7 @@
 
         <TextView
             android:text="@string/lifeStoryLinesShow"
-            android:id="@+id/serverPortText"
+            android:id="@+id/showLifeStoryTest"
             android:gravity="left|top"
             android:textColor="#999990"
             android:layout_row="1"
@@ -42,7 +42,7 @@
 
         <TextView
             android:text="@string/familyTreeLinesHeader"
-            android:id="@+id/userNameText"
+            android:id="@+id/familyTreeLinesText"
             android:textColor="#000000"
             android:gravity="left|center"
             android:paddingRight="10dp"
@@ -55,7 +55,7 @@
 
         <TextView
             android:text="@string/familyTreeLinesShow"
-            android:id="@+id/passwordText"
+            android:id="@+id/showTreeLinesText"
             android:textColor="#999990"
             android:gravity="left|center"
             android:paddingRight="10dp"
@@ -68,19 +68,20 @@
 
 
         <TextView
-            android:id="@+id/firstNameText"
+            android:text="@string/spouseLinesHeader"
+            android:id="@+id/spouseLinesText"
             android:layout_column="0"
             android:layout_columnWeight="3"
             android:layout_row="4"
             android:layout_rowWeight="1"
             android:gravity="left|bottom"
             android:paddingRight="10dp"
-            android:text="@string/spouseLinesHeader"
             android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/lastNameText"
+            android:text="@string/spouseLinesShow"
+            android:id="@+id/spouseLinesShowText"
             android:layout_column="0"
             android:layout_columnWeight="3"
             android:layout_row="5"
@@ -88,13 +89,12 @@
             android:background="@drawable/underline"
             android:gravity="left|center"
             android:paddingRight="10dp"
-            android:text="@string/spouseLinesShow"
             android:textColor="#999990"
             android:textSize="10sp" />
 
         <TextView
             android:text="@string/mapTypeHeader"
-            android:id="@+id/emailText"
+            android:id="@+id/mapTypeText"
             android:textColor="#000000"
             android:gravity="left|center"
             android:paddingRight="10dp"
@@ -107,7 +107,7 @@
 
         <TextView
             android:text="@string/mapTypeBackgroundDisplay"
-            android:id="@+id/genderText"
+            android:id="@+id/backgroundDisplayText"
             android:textColor="#999990"
             android:gravity="left|top"
             android:paddingRight="10dp"
@@ -121,7 +121,7 @@
 
         <TextView
             android:text="@string/resyncDataHeader"
-            android:id="@+id/genderMessageText"
+            android:id="@+id/reSyncDataText"
             android:textColor="#000000"
             android:gravity="left|center"
             android:paddingRight="20dp"

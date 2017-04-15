@@ -1,4 +1,4 @@
-package server.proxy;
+package com.example.alyx.proxy;
 
 import org.junit.After;
 import org.junit.Before;

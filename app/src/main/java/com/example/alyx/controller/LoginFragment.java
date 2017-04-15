@@ -1,8 +1,9 @@
-package com.example.alyx.view;
+package com.example.alyx.controller;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -26,7 +27,7 @@ import server.result.LoginResult;
 import server.result.RegisterResult;
 
 
-public class LoginFragment extends Fragment implements MainActivity.Caller {
+public class LoginFragment extends Fragment implements Caller {
     // Input fields
     private EditText mServerHostField;
     private EditText mServerPortField;
@@ -56,11 +57,6 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
     // Requests
     private LoginRequest loginRequest;
     private RegisterRequest registerRequest;
-
-    // Toasts
-    private String loginToast;
-    private String registerToast;
-    private String dataReceivedToast;
 
 
     @Override
@@ -216,6 +212,20 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
         return v;
     }
 
+    @Override
+    public void printToast(String toast){
+        Toast.makeText(getActivity(), toast, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void resync(boolean toMapNext){
+        new ResyncTask().execute(this);
+    }
+    @Override
+    public FragmentManager getThisFragmentManager(){
+        return getFragmentManager();
+    }
+
     private void setLoginComplete() {
         ((MainActivity)getActivity()).loginComplete();
     }
@@ -255,12 +265,15 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
     }
 
 
-    public class LoginTask extends AsyncTask<MainActivity.Caller, Integer, Boolean> {
-        LoginResult loginResult = new LoginResult();
-        Model model = Model.instanceOf();
-        ServerProxy mProxy = ServerProxy.server();
+    public class LoginTask extends AsyncTask<Caller, Integer, Boolean> {
+        private LoginResult loginResult = new LoginResult();
+        private Model model = Model.instanceOf();
+        private ServerProxy mProxy = ServerProxy.server();
+        private Caller caller;
+        private String loginToast;
 
-        protected Boolean doInBackground(MainActivity.Caller... urls) {
+        protected Boolean doInBackground(Caller... urls) {
+            caller = urls[0];
             try {
                 this.loginResult = mProxy.login(loginRequest);
             } catch (ClientException e){
@@ -268,13 +281,7 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
                 return false;
             }
             if(loginResult.getMessage() == null || loginResult.getMessage().equals("")){
-                try {
-                    model.getPeopleFromServer();
-                    model.getEventsFromServer();
-                    dataReceivedToast = firstName + " " + lastName;
-                } catch (ClientException e){
-                    dataReceivedToast = e.getMessage();
-                }
+                model.setCurrentUser(loginResult.getUserName());
                 return true;
             } else {
                 return false;
@@ -288,27 +295,26 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
         protected void onPostExecute(Boolean success) {
             if(success){
                 loginToast = "Login succeeded!";
-            } else {
-                loginToast = loginResult.getMessage();
-            }
-
-            Toast.makeText(getActivity(), loginToast, Toast.LENGTH_SHORT).show();
-            if(loginToast.equals("Login succeeded!")) {
-                Toast.makeText(getActivity(), dataReceivedToast, Toast.LENGTH_SHORT).show();
+                caller.printToast(loginToast);
                 setLoginComplete();
+                caller.resync(true);
+            } else {
+                caller.printToast(loginResult.getMessage());
+
             }
         }
     }
 
-    public class RegisterTask extends AsyncTask<MainActivity.Caller, Integer, Boolean> {
-        RegisterResult registerResult = new RegisterResult();
-        Model model = Model.instanceOf();
-        ServerProxy mProxy = ServerProxy.server();
 
-        MainActivity.Caller context;
+    public class RegisterTask extends AsyncTask<Caller, Integer, Boolean> {
+        private RegisterResult registerResult = new RegisterResult();
+        private Model model = Model.instanceOf();
+        private ServerProxy mProxy = ServerProxy.server();
+        private String registerToast;
+        private Caller caller;
 
-        protected Boolean doInBackground(MainActivity.Caller... urls) {
-            this.context = urls[0];
+        protected Boolean doInBackground(Caller... urls) {
+            this.caller = urls[0];
             try {
                 registerResult = mProxy.register(registerRequest);
             } catch (ClientException e){
@@ -316,14 +322,7 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
                 return false;
             }
             if(registerResult.getMessage() == null || registerResult.getMessage().equals("")){
-                // get persons in the model class
-                try {
-                    model.getPeopleFromServer();
-                    model.getEventsFromServer();
-                    dataReceivedToast = firstName + " " + lastName;
-                } catch (ClientException e){
-                    dataReceivedToast = e.getMessage();
-                }
+                model.setCurrentUser(registerResult.getUserName());
                 return true;
             } else {
                 return false;
@@ -337,12 +336,11 @@ public class LoginFragment extends Fragment implements MainActivity.Caller {
         protected void onPostExecute(Boolean success) {
             if(success){
                 registerToast = "Register succeeded!";
+                caller.printToast(registerToast);
+                caller.resync(true);
+                setLoginComplete();
             } else {
-                Toast.makeText(getActivity(), registerToast, Toast.LENGTH_SHORT).show();
-                if (registerToast.equals("Register succeeded!")) {
-                    Toast.makeText(getActivity(), dataReceivedToast, Toast.LENGTH_SHORT).show();
-                    setLoginComplete();
-                }
+                caller.printToast(registerResult.getMessage());
             }
         }
     }

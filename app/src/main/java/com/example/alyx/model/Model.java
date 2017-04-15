@@ -1,6 +1,5 @@
 package com.example.alyx.model;
 
-
 import server.model.Person;
 import server.model.Event;
 import server.proxy.ClientException;
@@ -13,29 +12,32 @@ import server.result.PersonResult;
  */
 
 public class Model {
-    ServerProxy server = ServerProxy.server();
+    // Connection to the server
+    private ServerProxy server = ServerProxy.server();
 
-    public Person[] getPersons() {
-        return persons;
-    }
+    // Working list of events (the ones shown)
+    private Event[] eventsVisible;
 
-    public void setPersons(Person[] persons) {
-        this.persons = persons;
-    }
+    // Partitions of Events by side of family
+    private Event[] mothersSideEvents;
+    private Event[] fathersSideEvents;
 
-    public Event[] getEvents() {
-        return events;
-    }
+    // Partitions of the People
+    private Person[] fathersSide;
+    private Person[] mothersSide;
 
-    public void setEvents(Event[] events) {
-        this.events = events;
-    }
-
+    // All person and event data from the database
     private Person[] persons;
     private Event[] events;
 
-    private Model(){}
+    // Descendant ID to sort info in the database
+    private String currentUser;
 
+    // Private constructor to make this a singleton
+    private Model(){}
+    private static Model _instance;
+
+    // Get an the instance of the class
     public static Model instanceOf(){
         if(_instance == null){
             _instance = new Model();
@@ -43,8 +45,7 @@ public class Model {
         return _instance;
     }
 
-    private static Model _instance;
-
+    // Pull all people info from the server
     public boolean getPeopleFromServer() throws ClientException {
         PersonResult peopleFromServer = this.server.person();
         if(peopleFromServer.getMessage() == null || peopleFromServer.getMessage().equals("")){
@@ -55,6 +56,7 @@ public class Model {
         }
     }
 
+    // Pull all event info from the server
     public boolean getEventsFromServer() throws ClientException {
         EventResult eventsFromServer = this.server.event();
         if(eventsFromServer.getMessage() == null || eventsFromServer.getMessage().equals("")){
@@ -63,5 +65,28 @@ public class Model {
         } else {
             return false;
         }
+    }
+
+    public String getCurrentUser() {
+        return this.currentUser;
+    }
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+    public Person[] getPersons() {
+        return this.persons;
+    }
+
+    public void setPersons(Person[] persons) {
+        this.persons = persons;
+    }
+
+    public Event[] getEvents() {
+        return this.events;
+    }
+
+    public void setEvents(Event[] events) {
+        this.events = events;
     }
 }

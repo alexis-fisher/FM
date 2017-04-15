@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.alyx.view.MapsActivity">
+        <activity android:name="com.example.alyx.controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +34,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.example.alyx.view.MapsActivity"
+            android:name="com.example.alyx.controller.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>
 

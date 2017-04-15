@@ -14,6 +14,6 @@ public class TestDriver {
             "server.dataAccess.EventDaoTest",
             "server.dataAccess.PersonDaoTest",
             "server.dataAccess.UserDaoTest",
-            "server.proxy.ServerProxyTest");
+            "com.example.alyx.proxy.ServerProxyTest");
     }
 }

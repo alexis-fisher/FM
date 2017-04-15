@@ -12,7 +12,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:background="#E8E8EE"
-        tools:context="com.example.alyx.view.MainActivity">
+        tools:context="com.example.alyx.controller.MainActivity">
 
 
         <GridLayout
