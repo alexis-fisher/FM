@@ -6,9 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alyx.model.Model;
 import com.example.alyx.server.R;
 
+
+import java.util.ArrayList;
+import java.util.Set;
+
 import server.model.Person;
+import server.model.Event;
 import server.proxy.ServerProxy;
 import server.result.PersonResult;
 
@@ -25,8 +31,13 @@ public class PersonActivity extends AppCompatActivity {
     private TextView mGender;
 
 
+    private Model model = Model.instanceOf();
 
+    private TextView eventListPlaceHolder;
 
+    private ArrayList<Event> thisPersonsEvents = new ArrayList<>();
+    private Event[] allEvents;
+    private Event[] personEvents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,22 @@ public class PersonActivity extends AppCompatActivity {
         mLastName.setText("");
         mGender.setText("");
 
+        allEvents = model.getEvents();
+        if(model.getEvents() != null && model.getEvents().length > 0) {
+//            for (Event e : allEvents) {
+//                if (e.getPerson().equals(personID)) {
+//                    thisPersonsEvents.add(e);
+//                }
+//            }
+//
+//            eventListPlaceHolder = (TextView) findViewById(R.id.eventsPersonList);
+//            personEvents = (Event[]) thisPersonsEvents.toArray();
+//            eventListPlaceHolder.setText(personEvents[0].getEventType());
+        } else{
+            eventListPlaceHolder = (TextView) findViewById(R.id.eventsPersonList);
+//        events = (Event[]) personsEvents.toArray();
+            eventListPlaceHolder.setText("events empty. Who knows why...?");
+        }
 
         new PersonInfo().execute(personID);
 
@@ -51,7 +78,13 @@ public class PersonActivity extends AppCompatActivity {
         person = p;
         mFirstName.setText(person.getFirstName());
         mLastName.setText(person.getLastName());
-        mGender.setText(person.getGender());
+        if(person.getGender().equals("m")){
+            mGender.setText("Male");
+        } else if (person.getGender().equals("f")){
+            mGender.setText("Female");
+        } else {
+            mGender.setText(person.getGender());
+        }
     }
 
     public void printToast(String toast){

@@ -50,16 +50,10 @@ public class Fill {
     // Random event bank
     private String[] randomEvents = { "Graduated, finally",
             "Finally started a job that isn't entry-level",
-            "No longer claimed as dependent on parent's taxes",
             "Started volunteer work because court required it",
-            "Expecting a baby, on purpose",
             "Replaced futon with first real couch",
-            "Deleted Candy Crush",
-            "Purchased own Netflix account",
             "Kept desk plant alive for one month",
-            "Actually went to the dentist",
-            "Figured out what a 401(k) is",
-            "Let someone else have the last fry"
+            "Actually went to the dentist"
     };
 
     // Year & generation standard numbers
@@ -208,6 +202,9 @@ public class Fill {
         random.setYear(Integer.toString(year));
         random.setPerson(person.getPersonID());
         random.setEventType(randomEvents[randomEventIndex]);
+        if(random.getEventType().equals("")){
+            random.setEventType(randomEvents[2]);
+        }
 
         addEventToDB(birth);
         addEventToDB(death);

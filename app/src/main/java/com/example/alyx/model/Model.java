@@ -1,5 +1,10 @@
 package com.example.alyx.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
 import server.model.Person;
 import server.model.Event;
 import server.proxy.ClientException;
@@ -25,6 +30,33 @@ public class Model {
     // Partitions of the People
     private Person[] fathersSide;
     private Person[] mothersSide;
+
+    public Map<String, Set<Event>> getEventsByPerson() {
+        return eventsByPerson;
+    }
+
+    public void setEventsByPerson(Map<String, Set<Event>> eventsByPerson) {
+        this.eventsByPerson = eventsByPerson;
+    }
+
+    // Map of Events, PersonID is the key.
+    private Map<String, Set<Event>> eventsByPerson= new HashMap<String, Set<Event>>();
+
+    public void sortEventsByPerson(){
+        for (Event e : events){
+            String personID = e.getPerson();
+
+            // add key and word to map
+            if(eventsByPerson.containsKey(personID)){
+                eventsByPerson.get(personID).add(e);
+            }
+            else{
+                eventsByPerson.put(personID, new TreeSet<Event>());
+                eventsByPerson.get(personID).add(e);
+            }
+        }
+    }
+
 
     // All person and event data from the database
     private Person[] persons;

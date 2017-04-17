@@ -38,6 +38,9 @@ public class ResyncTask extends AsyncTask<Caller, Integer, Boolean> {
     protected void onPostExecute(Boolean success) {
         if(dataReceivedToast != null && !dataReceivedToast.equals("")) {
             caller.printToast(dataReceivedToast);
+//            model.sortEventsByPerson();
+            caller.printToast("Sort Complete!");
+
         } else {
             caller.printToast("Internal server error. Could not sync data at this time.");
         }
