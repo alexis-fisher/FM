@@ -14,11 +14,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.alyx.controller.MainActivity">
-
+        <activity android:name="com.example.alyx.controller.MainActivity"
+            android:label="Family Map">
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
-
 
              <category android:name="android.intent.category.LAUNCHER" />
              </intent-filter>
@@ -37,6 +36,18 @@
         <activity
             android:name="com.example.alyx.controller.MapActivity"
             android:label="@string/title_activity_map">
+        </activity>
+        <activity
+            android:name="com.example.alyx.controller.PersonActivity"
+            android:label="@string/title_activity_person">
+        </activity>
+        <activity
+            android:name="com.example.alyx.controller.SettingsActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
+        <activity
+            android:name="com.example.alyx.controller.FilterActivity"
+            android:label="@string/title_activity_filter">
         </activity>
         <uses-library android:name="com.google.android.maps"/>
         <meta-data

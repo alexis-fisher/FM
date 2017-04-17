@@ -19,7 +19,6 @@ import server.result.PersonResult;
 public class PersonActivity extends AppCompatActivity {
     private String personID;
     private Person person;
-    private String personName;
 
     private TextView mFirstName;
     private TextView mLastName;
@@ -31,14 +30,20 @@ public class PersonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter);
+        setContentView(R.layout.activity_person);
         personID = getIntent().getStringExtra("personID");
 
-        new PersonInfo().execute(personID);
 
+        mFirstName = (TextView) findViewById (R.id.firstNameVariable);
+        mLastName = (TextView) findViewById (R.id.lastNameVariable);
+        mGender = (TextView) findViewById (R.id.genderVariable);
         mFirstName.setText("");
         mLastName.setText("");
         mGender.setText("");
+
+
+        new PersonInfo().execute(personID);
+
     }
 
 

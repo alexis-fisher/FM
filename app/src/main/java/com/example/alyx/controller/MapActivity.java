@@ -2,8 +2,8 @@ package com.example.alyx.controller;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,9 +14,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
+
 
 import server.model.Event;
 import server.model.Person;
@@ -24,10 +28,13 @@ import server.proxy.ServerProxy;
 import server.result.EventResult;
 import server.result.PersonResult;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Event[] events;
+   // private ArrayList<String> eventTypes;
+
     private Model model = Model.instanceOf();
 
     private TextView mEventOwner;
@@ -36,6 +43,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private Person owner;
     private String ownerName;
     private String info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +56,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mEventInfo = (TextView) findViewById (R.id.eventTypeAndLocationAndYear);
         mEventOwner.setText(getEventOwner());
         mEventInfo.setText(getEventInfo());
+
+        mEventOwner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toPersonActivity();
+            }
+        });
     }
 
 
@@ -78,19 +93,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
-//        mEventOwner.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                toPersonActivity();
-//            }
-//        });
+
     }
 
-//    private void toPersonActivity(){
-//        Intent intent = new Intent(MapActivity.this, PersonActivity.class);
-//        intent.putExtra("personID",owner.getPersonID());
-//        startActivity(intent);
-//    }
+    private void toPersonActivity(){
+        Intent intent = new Intent(MapActivity.this, PersonActivity.class);
+        intent.putExtra("personID",owner.getPersonID());
+        startActivity(intent);
+    }
+
 
     private String getEventOwner(){
         if(ownerName == null || ownerName.equals("")){
@@ -123,7 +134,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void addEventMarker(Event e){
         // Add a marker in Sydney and move the camera
         LatLng coordinates = new LatLng(Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()));
-        mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()));
+        mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
 
     }

@@ -27,5 +27,7 @@ dependencies {
     compile project(path: ':serverCode')
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.google.android.gms:play-services-maps:10.2.1'
+    compile 'com.joanzapata.android:android-iconify:1.0.9'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }
