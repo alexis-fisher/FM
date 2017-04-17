@@ -3,7 +3,11 @@ package com.example.alyx.controller;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,33 +33,78 @@ import server.result.EventResult;
 import server.result.PersonResult;
 
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Event[] events;
-   // private ArrayList<String> eventTypes;
+    // private ArrayList<String> eventTypes;
 
     private Model model = Model.instanceOf();
 
+    // Event information displayed at the bottom
     private TextView mEventOwner;
     private TextView mEventInfo;
+
+    // Menu buttons
+    private MenuItem mSearchButton;
+    private MenuItem mFilterButton;
+    private MenuItem mSettingsButton;
 
     private Person owner;
     private String ownerName;
     private String info;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        // Find the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Family Map");
+        toolbar.inflateMenu(R.menu.menu_main);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //Change the ImageView image source depends on menu item click
+                    case R.id.miSearch:
+                        printToast("Search Clicked!");
+//                        toSearchActivity();
+                        return true;
+                    case R.id.miFilter:
+                        printToast("Filter Clicked!");
+//                        toFilterActivity();
+                        return true;
+                    case R.id.miSettings:
+                        printToast("Settings Clicked!");
+                        toSettingsActivity();
+                        return true;
+                }
+                //If above criteria does not meet then default is false;
+                return false;
+            }
+        });
+
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+//        setSupportActionBar(toolbar);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Set up textviews below map!
         mEventOwner = (TextView) findViewById (R.id.eventOwnerName);
         mEventInfo = (TextView) findViewById (R.id.eventTypeAndLocationAndYear);
         mEventOwner.setText(getEventOwner());
         mEventInfo.setText(getEventInfo());
+
+
 
         mEventOwner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +114,45 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
+//    // Menu icons are inflated just as they were with actionbar
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+////        super.onCreateOptionsMenu(menu);
+//        // Inflate the menu; this adds items to the action bar if it is present.
+////        setSupportActionBar(toolbar);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//
+//        mSearchButton = (MenuItem) findViewById(R.id.miSearch);
+//        mSettingsButton = (MenuItem) findViewById(R.id.miSettings);
+//        mFilterButton = (MenuItem) findViewById(R.id.miFilter);
+//
+////        mSearchButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+////            @Override
+////            public boolean onMenuItemClick(MenuItem item) {
+//////                toPersonActivity();
+////                return true;
+////            }
+////        });
+////
+////        mSettingsButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+////            @Override
+////            public boolean onMenuItemClick(MenuItem item) {
+////                toPersonActivity();
+////                return false;
+////            }
+////        });
+////
+////        mFilterButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+////            @Override
+////            public boolean onMenuItemClick(MenuItem item) {
+////                toPersonActivity();
+////                return false;
+////            }
+////        });
+//
+//        return true;
+//    }
 
     /**
      * Manipulates the map once available.
@@ -96,10 +184,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-    private void toPersonActivity(){
-        Intent intent = new Intent(MapActivity.this, PersonActivity.class);
-        intent.putExtra("personID",owner.getPersonID());
+    private void toFilterActivity(){
+        Intent intent = new Intent(MapActivity.this, FilterActivity.class);
         startActivity(intent);
+    }
+
+    private void toSearchActivity(){
+        Intent intent = new Intent(MapActivity.this, FilterActivity.class);
+        startActivity(intent);
+    }
+
+    private void toSettingsActivity(){
+        Intent intent = new Intent(MapActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void toPersonActivity() {
+        if (owner != null && !owner.getPersonID().equals("")) {
+            Intent intent = new Intent(MapActivity.this, PersonActivity.class);
+            intent.putExtra("personID", owner.getPersonID());
+            startActivity(intent);
+        }
     }
 
 

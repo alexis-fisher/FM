@@ -57,7 +57,7 @@ public class ServerProxy {
     private static ServerProxy _instance;
 
     private ServerProxy() {
-        host = "10.4.99.117";
+        host = "10.37.36.223";
         port = 8080;
         url = "http://" + host + ":" + port;
     }

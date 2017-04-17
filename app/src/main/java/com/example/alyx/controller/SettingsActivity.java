@@ -1,6 +1,7 @@
 package com.example.alyx.controller;
 
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.example.alyx.server.R;
 
 
 public class SettingsActivity extends AppCompatActivity implements Caller {
+
 
     public void resync(boolean toMapNext){
         new ResyncTask().execute(this);
@@ -97,6 +99,7 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
             public void onClick(View v) {
                 // go into login thing
                 printToast("Should be going to login screen now!");
+                toLoginScreen();
             }
         });
     }
@@ -106,4 +109,8 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
         Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
     }
 
+    private void toLoginScreen(){
+        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 }

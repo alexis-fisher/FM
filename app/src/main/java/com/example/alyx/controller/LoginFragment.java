@@ -18,7 +18,6 @@ import com.example.alyx.model.Model;
 import com.example.alyx.server.R;
 
 
-
 import server.proxy.ClientException;
 import server.proxy.ServerProxy;
 import server.request.LoginRequest;

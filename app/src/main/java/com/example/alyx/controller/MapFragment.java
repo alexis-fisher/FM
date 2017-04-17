@@ -1,109 +1,207 @@
 package com.example.alyx.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.alyx.model.Model;
 import com.example.alyx.server.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MapFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MapFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import server.model.Event;
+import server.model.Person;
+import server.proxy.ServerProxy;
+import server.result.EventResult;
+import server.result.PersonResult;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class MapFragment extends SupportMapFragment implements OnMapReadyCallback{
 
-    private OnFragmentInteractionListener mListener;
+    private GoogleMap mMap;
+    private Event[] events;
+    // private ArrayList<String> eventTypes;
 
-    public MapFragment() {
-        // Required empty public constructor
-    }
+    private Model model = Model.instanceOf();
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MapFragment newInstance(String param1, String param2) {
-        MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private TextView mEventOwner;
+    private TextView mEventInfo;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private Person owner;
+    private String ownerName;
+    private String info;
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
-    }
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        // Get text from Server Host field
+        mEventOwner = (TextView) v.findViewById(R.id.eventOwnerName);
+        mEventInfo = (TextView) v.findViewById(R.id.eventTypeAndLocationAndYear);
+        mEventOwner.setText(getEventOwner());
+        mEventInfo.setText(getEventInfo());
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+
+        mEventOwner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+//                toPersonActivity();
+            }
+        });
+
+        return v;
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        this.events = model.getEvents();
+        for (Event e : events) {
+            addEventMarker(e);
+        }
+////                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin)));
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                new EventInfo().execute(marker.getTitle());
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                return true;
+            }
+        });
+
+
     }
+
+//    private void toPersonActivity(){
+//        Intent intent = new Intent(getActivity(), PersonActivity.class);
+//        intent.putExtra("personID",owner.getPersonID());
+//        startActivity(intent);
+//    }
+
+
+    private String getEventOwner(){
+        if(ownerName == null || ownerName.equals("")){
+            ownerName = "";
+        }
+        return ownerName;
+    }
+    private String getEventInfo(){
+        if(info == null || info.equals("")){
+            info = "";
+        }
+        return info;
+    }
+
+    private void setPerson(Person p){
+        owner = p;
+        ownerName = owner.getFirstName() + " " + owner.getLastName();
+        mEventOwner.setText(ownerName);
+
+    }
+
+    private void setEventInfo(Event e){
+        info = e.getEventType() + ": " + e.getCity() + ", " + e.getCountry() + " (" + e.getYear() + ")";
+        mEventInfo.setText(info);
+    }
+
+    public void printToast(String toast){
+        Toast.makeText(getActivity(), toast, Toast.LENGTH_SHORT).show();
+    }
+    private void addEventMarker(Event e){
+        // Add a marker in Sydney and move the camera
+        LatLng coordinates = new LatLng(Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()));
+        mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
+
+    }
+
+
+
+
+    public class EventInfo extends AsyncTask<String, Integer, Person> {
+        private EventResult eventResult = new EventResult();
+        private PersonResult personResult = new PersonResult();
+        private ServerProxy mProxy = ServerProxy.server();
+        private Event event;
+        private String eventID;
+        private boolean eventGotten = false;
+
+        protected Person doInBackground(String... urls) {
+            // Get event ID
+            this.eventID = urls[0];
+
+            // Get event BY ID
+            eventResult = mProxy.event(eventID);
+
+            // If no error message, continue.
+            if(eventResult.getMessage() == null || eventResult.getMessage().equals("")){
+                eventGotten = true;
+                event = eventResult.getEvent();
+
+                // Get person associated with event
+                personResult = mProxy.person(event.getPerson());
+
+                // If no error message, return the person!
+                if(personResult.getMessage() == null || personResult.getMessage().equals("")) {
+                    return personResult.getPerson();
+                }
+
+                // if error message, return null
+                else {
+                    return null;
+                }
+            } else {  // if error message, return null
+                return null;
+            }
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            // progressBar.setProgress(progress[0]);
+        }
+
+        protected void onPostExecute(Person success) {
+            if(success != null){
+                setPerson(success);
+                setEventInfo(event);
+            } else {
+                if(eventGotten) {
+                    printToast(personResult.getMessage());
+                } else {
+                    printToast(eventResult.getMessage());
+                }
+            }
+        }
+    }
+
 }
