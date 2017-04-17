@@ -18,8 +18,12 @@ public class ResyncTask extends AsyncTask<Caller, Integer, Boolean> {
     protected Boolean doInBackground(Caller... urls) {
         this.caller = urls[0];
         try {
-            model.getPeopleFromServer();
-            model.getEventsFromServer();
+            if(!model.getPeopleFromServer()){
+                return false;
+            }
+            if(!model.getEventsFromServer()){
+                return false;
+            }
             dataReceivedToast = "Resync complete";
         } catch (ClientException e){
             dataReceivedToast = e.getMessage();
