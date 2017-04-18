@@ -72,15 +72,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 switch (item.getItemId()) {
                     //Change the ImageView image source depends on menu item click
                     case R.id.miSearch:
-                        printToast("Search Clicked!");
-//                        toSearchActivity();
+//                        printToast("Search Clicked!");
+                        toSearchActivity();
                         return true;
                     case R.id.miFilter:
-                        printToast("Filter Clicked!");
-//                        toFilterActivity();
+//                        printToast("Filter Clicked!");
+                        toFilterActivity();
                         return true;
                     case R.id.miSettings:
-                        printToast("Settings Clicked!");
+//                        printToast("Settings Clicked!");
                         toSettingsActivity();
                         return true;
                 }
@@ -137,6 +137,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        setMapType();
         this.events = model.getEvents();
         addEventMarkers(this.events);
 
@@ -159,7 +160,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     private void toSearchActivity(){
-        Intent intent = new Intent(MapActivity.this, FilterActivity.class);
+        Intent intent = new Intent(MapActivity.this, SearchActivity.class);
         startActivity(intent);
     }
 

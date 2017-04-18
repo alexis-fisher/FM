@@ -202,9 +202,17 @@ public class Fill {
         random.setYear(Integer.toString(year));
         random.setPerson(person.getPersonID());
         random.setEventType(randomEvents[randomEventIndex]);
-        if(random.getEventType().equals("")){
-            random.setEventType(randomEvents[2]);
-        }
+
+//        ArrayList<Event>events = new ArrayList<>();
+//        events.add(birth);
+//        events.add(death);
+//        events.add(random);
+//
+//        person.setEvents(events);
+//        db.openTransaction();
+//        db.persons.updatePerson(person.getPersonID(), person);
+//        db.closeTransaction(true);
+
 
         addEventToDB(birth);
         addEventToDB(death);
@@ -283,6 +291,10 @@ public class Fill {
         // Add events to the database!
         addEventToDB(wifeMarriage);
         addEventToDB(husbMarriage);
+
+//        // Add events to the people!
+//        wife.addEvent(wifeMarriage);
+//        husb.addEvent(husbMarriage);
 
         // Commit person changes to the database
         db.openTransaction();

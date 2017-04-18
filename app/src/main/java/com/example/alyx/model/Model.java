@@ -43,16 +43,19 @@ public class Model {
     private Map<String, Set<Event>> eventsByPerson= new HashMap<String, Set<Event>>();
 
     public void sortEventsByPerson(){
-        for (Event e : events){
-            String personID = e.getPerson();
+        if(events != null && events.length > 0) {
+            for (Event e : events) {
+                String personID = e.getPerson();
 
-            // add key and word to map
-            if(eventsByPerson.containsKey(personID)){
-                eventsByPerson.get(personID).add(e);
-            }
-            else{
-                eventsByPerson.put(personID, new TreeSet<Event>());
-                eventsByPerson.get(personID).add(e);
+                // add key and word to map
+                if(eventsByPerson != null) {
+                    if (eventsByPerson.containsKey(personID)) {
+                        eventsByPerson.get(personID).add(e);
+                    } else {
+                        eventsByPerson.put(personID, new TreeSet<Event>());
+                        eventsByPerson.get(personID).add(e);
+                    }
+                }
             }
         }
     }
@@ -93,6 +96,7 @@ public class Model {
         EventResult eventsFromServer = this.server.event();
         if(eventsFromServer.getMessage() == null || eventsFromServer.getMessage().equals("")){
             this.events = eventsFromServer.data;
+//            sortEventsByPerson();
             return true;
         } else {
             return false;

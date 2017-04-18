@@ -13,7 +13,7 @@
 
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/settingsForm"
         android:columnCount="3"
@@ -23,7 +23,8 @@
         android:paddingRight="15dp"
         android:paddingTop="25dp"
         android:paddingBottom="25dp"
-        android:layout_weight="0.85">
+        android:layout_weight="0.85"
+        android:layout_alignParentTop="true">
 
 
         <TextView
@@ -36,7 +37,7 @@
             android:background="@drawable/underline"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
 
 
 
@@ -49,8 +50,8 @@
             android:layout_row="2"
             android:layout_column="0"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="18sp" />
+            android:layout_columnWeight="1"
+            android:textSize="15sp" />
 
 
         <TextView
@@ -63,34 +64,34 @@
             android:layout_column="0"
             android:background="@drawable/underline"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="10sp" />
+            android:layout_columnWeight="1"
+            android:textSize="9sp" />
 
 
         <TextView
             android:text="@string/spouseLinesHeader"
             android:id="@+id/spouseLinesText"
             android:layout_column="0"
-            android:layout_columnWeight="3"
+            android:layout_columnWeight="1"
             android:layout_row="4"
             android:layout_rowWeight="1"
             android:gravity="left|bottom"
             android:paddingRight="10dp"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:text="@string/spouseLinesShow"
             android:id="@+id/spouseLinesShowText"
             android:layout_column="0"
-            android:layout_columnWeight="3"
+            android:layout_columnWeight="1"
             android:layout_row="5"
             android:layout_rowWeight="1"
             android:background="@drawable/underline"
             android:gravity="left|center"
             android:paddingRight="10dp"
             android:textColor="#999990"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
 
         <TextView
             android:text="@string/mapTypeHeader"
@@ -101,8 +102,8 @@
             android:layout_row="6"
             android:layout_column="0"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="18sp" />
+            android:layout_columnWeight="1"
+            android:textSize="15sp" />
 
 
         <TextView
@@ -115,8 +116,8 @@
             android:layout_column="0"
             android:background="@drawable/underline"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="10sp" />
+            android:layout_columnWeight="1"
+            android:textSize="7sp" />
 
 
         <TextView
@@ -124,13 +125,13 @@
             android:id="@+id/reSyncDataText"
             android:textColor="#000000"
             android:gravity="left|center"
-            android:paddingRight="20dp"
+            
             android:paddingBottom="5dp"
             android:layout_row="8"
             android:layout_column="0"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="18sp" />
+            android:layout_columnWeight="1"
+            android:textSize="15sp" />
 
 
         <TextView
@@ -138,195 +139,195 @@
             android:id="@+id/fromFMtext"
             android:textColor="#999990"
             android:gravity="left|top"
-            android:paddingRight="20dp"
+            
             android:paddingBottom="5dp"
             android:layout_row="9"
             android:layout_column="0"
             android:background="@drawable/underline"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="10sp" />
+            android:layout_columnWeight="1"
+            android:textSize="9sp" />
 
         <TextView
             android:text="@string/logout"
             android:id="@+id/logoutText"
             android:textColor="#000000"
             android:gravity="left|center"
-            android:paddingRight="20dp"
             android:paddingBottom="5dp"
             android:layout_row="10"
             android:layout_column="0"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="18sp" />
+            android:layout_columnWeight="1"
+            android:textSize="15sp" />
 
         <TextView
             android:text="@string/returnsToLoginScreen"
             android:id="@+id/returnstoLScreenText"
             android:textColor="#999990"
             android:gravity="left|top"
-            android:paddingRight="20dp"
+            
             android:paddingBottom="5dp"
             android:layout_row="11"
             android:layout_column="0"
             android:background="@drawable/underline"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="3"
-            android:textSize="10sp" />
+            android:layout_columnWeight="1"
+            android:textSize="9sp" />
 
 
 
 
         <Switch
             android:id="@+id/lifeLinesSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/settingsForm"
             android:gravity="right|bottom"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="10dp"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <Switch
             android:id="@+id/familyLinesSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/settingsForm"
             android:gravity="right|bottom"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="10dp"
             android:layout_row="2"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <Switch
             android:id="@+id/spouseLinesSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/settingsForm"
             android:gravity="right|bottom"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="10dp"
             android:layout_row="4"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="1"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="3"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"
+            android:layout_width="89dp"
+            android:layout_height="wrap_content" />
         <TextView
             android:background="@drawable/underline"
             android:layout_row="5"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="7"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="9"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="11"
             android:layout_column="2"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="1"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="3"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="5"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="7"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="9"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
         <TextView
             android:background="@drawable/underline"
             android:layout_row="11"
             android:layout_column="1"
             android:layout_rowWeight="1"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight=".05"/>
 
         <TextView
             android:id="@+id/serverHostText"
             android:layout_column="0"
-            android:layout_columnWeight="1"
+            android:layout_columnWeight=".05"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:gravity="left|center"
             android:text="@string/lifeStoryLinesHeader"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/ddMenuLife"
+            android:prompt="@string/color_prompt"
+            android:entries="@array/colorOptions"
             android:layout_column="1"
-            android:layout_columnWeight="2"
+            android:layout_columnWeight=".05"
             android:layout_row="0"
-            android:layout_rowWeight="1" />
+            android:layout_rowWeight="1"
+            android:textSize="8sp"
+            android:layout_width="wrap_content" />
+
         <Spinner
             android:id="@+id/ddMenuFam"
+            android:prompt="@string/color_prompt"
+            android:entries="@array/colorOptions"
             android:layout_column="1"
-            android:layout_columnWeight="2"
+            android:layout_columnWeight=".05"
             android:layout_row="2"
-            android:layout_rowWeight="1" />
+            android:layout_rowWeight="1"
+            android:textSize="8sp"
+            android:layout_width="81dp" />
         <Spinner
             android:id="@+id/ddMenuSpouse"
+            android:prompt="@string/color_prompt"
+            android:entries="@array/colorOptions"
             android:layout_column="1"
-            android:layout_columnWeight="2"
+            android:layout_columnWeight=".05"
             android:layout_row="4"
-            android:layout_rowWeight="1" />
+            android:layout_rowWeight="1"
+            android:textSize="8sp"
+            android:layout_width="96dp" />
         <Spinner
             android:id="@+id/ddMenuMap"
+            android:prompt="@string/map_prompt"
+            android:entries="@array/mapOptions"
             android:layout_column="2"
-            android:layout_columnWeight="1"
+            android:layout_columnWeight=".05"
             android:layout_row="6"
-            android:layout_rowWeight="1" />
+            android:layout_rowWeight="1"
+            android:textSize="8sp"
+            android:layout_width="105dp" />
 
     </GridLayout>
 

@@ -53,11 +53,11 @@ public class Settings {
     // Options for Settings
     private boolean showLifeLines = false;
     private boolean showFamilyTreeLines = false;
-    private boolean showSpouseLines = true;
+    private boolean showSpouseLines = false;
     private int lifeLineColor = Color.DKGRAY;
     private int familyTreeLineColor = Color.GREEN;
     private int spouseLineColor = Color.BLACK;
-    private String mapType;
+    private String mapType = "Normal";
 
 
     public void onOffLifeLines(){
@@ -91,24 +91,60 @@ public class Settings {
         return lifeLineColor;
     }
 
-    public void setLifeLineColor(int lifeLineColor) {
-        this.lifeLineColor = lifeLineColor;
+    public void setLifeLineColor(String lifeLineColor) {
+        if(lifeLineColor.equals("Gray")){
+            this.lifeLineColor = Color.GRAY;
+        } else if (lifeLineColor.equals("Green")) {
+            this.lifeLineColor = Color.GREEN;
+        } else {
+            this.lifeLineColor = Color.BLACK;
+        }
     }
 
     public int getFamilyTreeLineColor() {
         return familyTreeLineColor;
     }
 
-    public void setFamilyTreeLineColor(int familyTreeLineColor) {
-        this.familyTreeLineColor = familyTreeLineColor;
+    public void setFamilyTreeLineColor(String familyTreeLineColor) {
+        if(familyTreeLineColor.equals("Gray")){
+            this.familyTreeLineColor = Color.GRAY;
+        } else if (familyTreeLineColor.equals("Green")) {
+            this.familyTreeLineColor = Color.GREEN;
+        } else {
+            this.familyTreeLineColor = Color.BLACK;
+        }
     }
 
     public int getSpouseLineColor() {
         return spouseLineColor;
     }
 
-    public void setSpouseLineColor(int spouseLineColor) {
-        this.spouseLineColor = spouseLineColor;
+    public String getColorAsWord(int color){
+        String word;
+        switch(color){
+            case Color.DKGRAY:
+                word = "Gray";
+                break;
+            case Color.BLACK:
+                word = "Black";
+                break;
+            case Color.GREEN:
+                word = "Green";
+                break;
+            default:
+                word = "Black";
+        }
+        return word;
+    }
+
+    public void setSpouseLineColor(String spouseLineColor) {
+        if(spouseLineColor.equals("Gray")){
+            this.spouseLineColor = Color.GRAY;
+        } else if (spouseLineColor.equals("Green")) {
+            this.spouseLineColor = Color.GREEN;
+        } else {
+            this.spouseLineColor = Color.BLACK;
+        }
     }
 
     public String getMapType() {

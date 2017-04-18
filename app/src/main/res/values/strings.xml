@@ -68,13 +68,29 @@
     <string name="firstName">FIRST NAME</string>
     <string name="lastName">LAST NAME</string>
     <string name="gender">GENDER</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_person">Person</string>
-    <string name="title_activity_filter">Filter</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_person">Family Map: Person Details</string>
+    <string name="title_activity_filter">Family Map: Filter</string>
+    <string name="title_activity_settings">Family Map: Settings</string>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_search">Family Map: Search</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="color_prompt">Choose a color</string>
+    <string name="map_prompt">Choose a type</string>
+
+    <string-array name="colorOptions">
+        <item>Black</item>
+        <item>Green</item>
+        <item>Gray</item>
+    </string-array>
+
+    <string-array name="mapOptions">
+        <item>Normal</item>
+        <item>Hybrid</item>
+        <item>Satellite</item>
+        <item>Terrain</item>
+    </string-array>
 
 </resources>

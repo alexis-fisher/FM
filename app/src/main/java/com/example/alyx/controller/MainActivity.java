@@ -48,7 +48,6 @@ public class MainActivity extends FragmentActivity {
         startActivity(intent);
 
         toolbar.inflateMenu(R.menu.menu_main);
-        loginComplete = false;
 
     }
 }

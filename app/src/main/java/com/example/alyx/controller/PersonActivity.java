@@ -52,22 +52,9 @@ public class PersonActivity extends AppCompatActivity {
         mLastName.setText("");
         mGender.setText("");
 
-        allEvents = model.getEvents();
-        if(model.getEvents() != null && model.getEvents().length > 0) {
-//            for (Event e : allEvents) {
-//                if (e.getPerson().equals(personID)) {
-//                    thisPersonsEvents.add(e);
-//                }
-//            }
-//
-//            eventListPlaceHolder = (TextView) findViewById(R.id.eventsPersonList);
-//            personEvents = (Event[]) thisPersonsEvents.toArray();
-//            eventListPlaceHolder.setText(personEvents[0].getEventType());
-        } else{
-            eventListPlaceHolder = (TextView) findViewById(R.id.eventsPersonList);
-//        events = (Event[]) personsEvents.toArray();
-            eventListPlaceHolder.setText("events empty. Who knows why...?");
-        }
+
+        eventListPlaceHolder = (TextView) findViewById(R.id.eventsPersonList);
+
 
         new PersonInfo().execute(personID);
 

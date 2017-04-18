@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.example.alyx.controller.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="Family Map">
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
@@ -35,19 +36,48 @@
 
         <activity
             android:name="com.example.alyx.controller.MapActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_map">
         </activity>
         <activity
             android:name="com.example.alyx.controller.PersonActivity"
-            android:label="@string/title_activity_person">
+            android:label="@string/title_activity_person"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName="com.example.alyx.controller.MapActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alyx.controller.MapActivity" />
         </activity>
         <activity
             android:name="com.example.alyx.controller.SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName="com.example.alyx.controller.MapActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alyx.controller.MapActivity" />
         </activity>
         <activity
             android:name="com.example.alyx.controller.FilterActivity"
-            android:label="@string/title_activity_filter">
+            android:label="@string/title_activity_filter"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName="com.example.alyx.controller.MapActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alyx.controller.MapActivity" />
+        </activity>
+        <activity
+            android:name="com.example.alyx.controller.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName="com.example.alyx.controller.MapActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alyx.controller.MapActivity" />
         </activity>
         <uses-library android:name="com.google.android.maps"/>
         <meta-data
