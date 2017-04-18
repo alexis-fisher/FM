@@ -3,6 +3,7 @@ package com.example.alyx.controller;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.example.alyx.server.R;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.TreeSet;
 
 import server.model.Person;
 import server.model.Event;
@@ -24,20 +26,25 @@ import server.result.PersonResult;
 
 public class PersonActivity extends AppCompatActivity {
     private String personID;
-    private Person person;
+    private Person person = null;
+    private Person mother;
+    private Person father;
+    private Person spouse;
 
     private TextView mFirstName;
     private TextView mLastName;
     private TextView mGender;
 
-
     private Model model = Model.instanceOf();
 
     private TextView eventListPlaceHolder;
+    private TextView personListPlaceHolder;
+    private TextView personListPlaceHolder1;
+    private TextView personListPlaceHolder2;
 
-    private ArrayList<Event> thisPersonsEvents = new ArrayList<>();
-    private Event[] allEvents;
-    private Event[] personEvents;
+    private Set<Event> events = new TreeSet<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +61,16 @@ public class PersonActivity extends AppCompatActivity {
 
 
         eventListPlaceHolder = (TextView) findViewById(R.id.eventsPersonList);
+        personListPlaceHolder = (TextView) findViewById(R.id.relationsPersonList);
+        personListPlaceHolder1 = (TextView) findViewById(R.id.relationsPersonList1);
+        personListPlaceHolder2 = (TextView) findViewById(R.id.relationsPersonList2);
 
+        if(model.getEventsOf(personID) != null){
+            events = model.getEventsOf(personID);
+        }
+
+        TreeSet<Event> eventsExample = (TreeSet) events;
+        eventListPlaceHolder.setText(eventsExample.first().getEventType());
 
         new PersonInfo().execute(personID);
 
@@ -62,16 +78,39 @@ public class PersonActivity extends AppCompatActivity {
 
 
     private void setPerson(Person p){
-        person = p;
-        mFirstName.setText(person.getFirstName());
-        mLastName.setText(person.getLastName());
-        if(person.getGender().equals("m")){
-            mGender.setText("Male");
-        } else if (person.getGender().equals("f")){
-            mGender.setText("Female");
+        if(person == null) {
+            person = p;
+            mFirstName.setText(person.getFirstName());
+            mLastName.setText(person.getLastName());
+            if (person.getGender().equals("m")) {
+                mGender.setText("Male");
+            } else if (person.getGender().equals("f")) {
+                mGender.setText("Female");
+            } else {
+                mGender.setText(person.getGender());
+            }
+            new PersonInfo().execute(person.getMother());
+            new PersonInfo().execute(person.getFather());
+            new PersonInfo().execute(person.getSpouse());
+
         } else {
-            mGender.setText(person.getGender());
+            if(person.getMother().equals(p.getPersonID())){
+                mother = p;
+                personListPlaceHolder.setText("Mother: " + mother.getFirstName());
+                // display mother in list
+            } else if (person.getFather().equals(p.getPersonID())){
+                father = p;
+                // display father in list
+                personListPlaceHolder1.setText("Father: " + father.getFirstName());
+
+            } else if(person.getSpouse().equals(p.getPersonID())){
+                spouse = p;
+                personListPlaceHolder2.setText("Spouse: " + spouse.getFirstName());
+
+                // display spouse in list
+            }
         }
+
     }
 
     public void printToast(String toast){

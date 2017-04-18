@@ -4,7 +4,7 @@ package server.model;
  * Created by Alyx on 2/17/17.
  */
 
-public class Event {
+public class Event implements Comparable {
     /** Unique identifier for this event */
     private String eventID;
 
@@ -112,5 +112,35 @@ public class Event {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o == null){
+            return 0;
+        }
+        if(o.getClass() != Event.class){
+            return 0;
+        }
+        if(o == this){
+            return 0;
+        }
+        Event ev = (Event) o;
+        if(Integer.parseInt(ev.getYear()) > Integer.parseInt(this.getYear())){
+            return 1;
+        } else if(Integer.parseInt(ev.getYear()) < Integer.parseInt(this.getYear())){
+            return -1;
+        } else {
+            if(ev.getEventType().equals("")){
+                ev.setEventType("birth");
+            }
+            if(ev.getEventType().toLowerCase().charAt(0) > this.getEventType().toLowerCase().charAt(0)){
+                return 1;
+            } else if (ev.getEventType().toLowerCase().charAt(0) < this.getEventType().toLowerCase().charAt(0)){
+                return -1;
+            } else { // close enough to alphabetic order for this app... ha.
+                return 1;
+            }
+        }
     }
 }

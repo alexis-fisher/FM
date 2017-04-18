@@ -130,6 +130,26 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:textSize="18sp" />
+
+        <TextView
+            android:text="Coming soon, related people"
+            android:id="@+id/relationsPersonList1"
+            android:textColor="#000000"
+            android:gravity="left|center"
+            android:paddingRight="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="Coming soon, related people"
+            android:id="@+id/relationsPersonList2"
+            android:textColor="#000000"
+            android:gravity="left|center"
+            android:paddingRight="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </LinearLayout>

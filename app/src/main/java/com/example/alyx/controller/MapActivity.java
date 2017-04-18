@@ -2,12 +2,14 @@ package com.example.alyx.controller;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,11 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import server.model.Event;
 import server.model.Person;
@@ -46,6 +53,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     // Event information displayed at the bottom
     private TextView mEventOwner;
     private TextView mEventInfo;
+//    private ImageView mGenderColor;
+
 
     private Person owner;
     private String ownerName;
@@ -65,6 +74,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         toolbar.setTitle("Family Map");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.inflateMenu(R.menu.menu_main);
+
+//        mGenderColor = (ImageView) findViewById(R.id.genderColor);
+
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -103,6 +115,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mEventInfo.setText(getEventInfo());
 
 
+
         mEventOwner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,21 +123,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
     }
-//
-//    private void sortEventsByPerson(){
-//        // Sort events by person for use by person activity
-//        events = model.getEvents();
-//        for (Event e : events) {
-//            // Get person associated with event
-//            String personID = e.getPerson();
-//            if (eventsByPerson.containsKey(personID)) {
-//                eventsByPerson.get(personID).add(e);
-//            } else {
-//                eventsByPerson.put(personID, new TreeSet<Event>());
-//                eventsByPerson.get(personID).add(e);
-//            }
-//        }
-//    }
+
+    private void sortEventsByPerson(){
+        Map<String, Set<Event>> eventsByPerson = new HashMap<String,Set<Event>>();
+        // Sort events by person for use by person activity
+        events = model.getEvents();
+        for (Event e : events) {
+            // Get person associated with event
+            String personID = e.getPerson();
+            if (eventsByPerson.containsKey(personID)) {
+                eventsByPerson.get(personID).add(e);
+            } else {
+                eventsByPerson.put(personID, new TreeSet<Event>());
+                eventsByPerson.get(personID).add(e);
+            }
+        }
+        model.setEventsByPerson(eventsByPerson);
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -193,8 +208,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private void setPerson(Person p){
         owner = p;
+
+        // Set name
         ownerName = owner.getFirstName() + " " + owner.getLastName();
         mEventOwner.setText(ownerName);
+
+        // Set icon
+//        Drawable image;
+//        if(owner.getGender().equals("m")){
+////            image = getResources().getDrawable();
+//        } else {
+////            image = getResources().getDrawable();
+//        }
+////        mGenderColor.setImageDrawable(image);
 
     }
 
@@ -273,6 +299,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
     }
     private void addEventMarkers(Event[] events){
+        sortEventsByPerson();
         for(Event e : events) {
 
             if(e.getEventType() == null || e.getEventType().equals("") || e.getEventType().length() <= 0){

@@ -103,6 +103,14 @@ public class Model {
         }
     }
 
+    public Set<Event> getEventsOf(String personID){
+        Set<Event> eventsOf = null;
+        if(eventsByPerson != null && eventsByPerson.size() > 0){
+            eventsOf = eventsByPerson.get(personID);
+        }
+        return eventsOf;
+    }
+
     public String getCurrentUser() {
         return this.currentUser;
     }
