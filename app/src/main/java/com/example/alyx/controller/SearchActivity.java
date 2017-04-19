@@ -8,14 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,10 +55,6 @@ public class SearchActivity extends AppCompatActivity{
         mSearchField = (EditText) findViewById(R.id.searchField);
         mRecyclerView = (RecyclerView) findViewById(R.id.searchList);
 
-        // Set up search-er
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        search("");
-
         // Wait for input
         mSearchField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,6 +70,10 @@ public class SearchActivity extends AppCompatActivity{
                 }
             }
         });
+
+        // Set up search-er
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        search("");
 
     }
 
@@ -162,9 +160,9 @@ public class SearchActivity extends AppCompatActivity{
 
                     // Set icon
                     if(person.getGender().equals("m")){
-                        mIcon.setImageDrawable(new IconDrawable(context, Iconify.IconValue.fa_male));
+                        mIcon.setImageDrawable(new IconDrawable(context, Iconify.IconValue.fa_male).colorRes(R.color.colorPrimary));
                     } else {
-                        mIcon.setImageDrawable(new IconDrawable(context, Iconify.IconValue.fa_female));
+                        mIcon.setImageDrawable(new IconDrawable(context, Iconify.IconValue.fa_female).colorRes(R.color.colorAccent));
                     }
                 }
             }

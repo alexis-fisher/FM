@@ -53,7 +53,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     // Event information displayed at the bottom
     private TextView mEventOwner;
     private TextView mEventInfo;
-//    private ImageView mGenderColor;
+    private ImageView mGenderColor;
 
 
     private Person owner;
@@ -75,7 +75,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.inflateMenu(R.menu.menu_main);
 
-//        mGenderColor = (ImageView) findViewById(R.id.genderColor);
 
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -113,6 +112,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mEventInfo = (TextView) findViewById (R.id.eventTypeAndLocationAndYear);
         mEventOwner.setText(getEventOwner());
         mEventInfo.setText(getEventInfo());
+        mGenderColor = (ImageView) findViewById(R.id.genderIcon);
+
 
 
 
@@ -216,14 +217,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mEventOwner.setText(ownerName);
 
         // Set icon
-//        Drawable image;
-//        if(owner.getGender().equals("m")){
-////            image = getResources().getDrawable();
-//        } else {
-////            image = getResources().getDrawable();
-//        }
-////        mGenderColor.setImageDrawable(image);
-
+        if(owner.getGender().equals("m")){
+            mGenderColor.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_male).colorRes(R.color.colorPrimary));
+        } else {
+            mGenderColor.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_male).colorRes(R.color.colorAccent));
+        }
     }
 
     @Override
