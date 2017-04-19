@@ -159,6 +159,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         this.events = model.getEvents();
         addEventMarkers(this.events);
 
+        if(model.getEventSelected() != null && !model.getEventSelected().getYear().equals("")) {
+            LatLng selectedEventPosition = new LatLng(Float.parseFloat(model.getEventSelected().getLatitude()), Float.parseFloat(model.getEventSelected().getLongitude()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedEventPosition));
+            new EventInfo().execute(model.getEventSelected().getEventID());
+        }
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
         {
             @Override
@@ -231,6 +237,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             mMap.clear();
             setMapType();
             addEventMarkers(model.getEvents());
+            if(model.getEventSelected() != null && !model.getEventSelected().getYear().equals("")) {
+                LatLng selectedEventPosition = new LatLng(Float.parseFloat(model.getEventSelected().getLatitude()), Float.parseFloat(model.getEventSelected().getLongitude()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedEventPosition));
+                new EventInfo().execute(model.getEventSelected().getEventID());
+            }
         }
     }
 
@@ -298,6 +309,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void printToast(String toast){
         Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
     }
+
     private void addEventMarkers(Event[] events){
         sortEventsByPerson();
         for(Event e : events) {

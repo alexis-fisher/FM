@@ -111,45 +111,12 @@
         android:layout_margin="5dp"
         android:padding="20dp"
         android:orientation="vertical">
-        <TextView
-            android:text="Coming soon, life events"
-            android:id="@+id/eventsPersonList"
-            android:textColor="#000000"
-            android:gravity="left|center"
-            android:paddingRight="10dp"
+        <ExpandableListView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textSize="18sp" />
-
-        <TextView
-            android:text="Coming soon, related people"
-            android:id="@+id/relationsPersonList"
-            android:textColor="#000000"
-            android:gravity="left|center"
-            android:paddingRight="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textSize="18sp" />
-
-        <TextView
-            android:text="Coming soon, related people"
-            android:id="@+id/relationsPersonList1"
-            android:textColor="#000000"
-            android:gravity="left|center"
-            android:paddingRight="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textSize="18sp" />
-
-        <TextView
-            android:text="Coming soon, related people"
-            android:id="@+id/relationsPersonList2"
-            android:textColor="#000000"
-            android:gravity="left|center"
-            android:paddingRight="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textSize="18sp" />
+            android:id="@+id/resultDetails"
+            android:dividerHeight="1dp"
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"/>
     </LinearLayout>
 
 </LinearLayout>

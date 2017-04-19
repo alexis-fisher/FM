@@ -24,8 +24,7 @@
         android:layout_toRightOf="@+id/resultIcon"
         android:id="@+id/resultDescription"
         android:text="@string/resultDescription"
-        android:textColor="@color/colorPrimary"
-        android:background="@drawable/underline"/>
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:layout_width="match_parent"
