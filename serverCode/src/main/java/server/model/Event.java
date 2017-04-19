@@ -133,19 +133,19 @@ public class Event implements Comparable, Searchable {
         }
         Event ev = (Event) o;
         if(Integer.parseInt(ev.getYear()) > Integer.parseInt(this.getYear())){
-            return 1;
-        } else if(Integer.parseInt(ev.getYear()) < Integer.parseInt(this.getYear())){
             return -1;
+        } else if(Integer.parseInt(ev.getYear()) < Integer.parseInt(this.getYear())){
+            return 1;
         } else {
             if(ev.getEventType().equals("")){
                 ev.setEventType("birth");
             }
             if(ev.getEventType().toLowerCase().charAt(0) > this.getEventType().toLowerCase().charAt(0)){
-                return 1;
-            } else if (ev.getEventType().toLowerCase().charAt(0) < this.getEventType().toLowerCase().charAt(0)){
                 return -1;
-            } else { // close enough to alphabetic order for this... ha.
+            } else if (ev.getEventType().toLowerCase().charAt(0) < this.getEventType().toLowerCase().charAt(0)){
                 return 1;
+            } else { // close enough to alphabetic order for this... ha.
+                return -1;
             }
         }
     }

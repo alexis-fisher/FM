@@ -257,7 +257,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    public float setMarkerColor(String eventType){
+    public float setMarkerColor(Event event){
+        String eventType = event.getEventType();
+        model.addToEventMap(eventType,event);
         float color = 0;
         switch (eventType.toLowerCase()) {
             case "birth":
@@ -320,7 +322,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             // Add a marker and move the camera
             LatLng coordinates = new LatLng(Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()));
-            mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(setMarkerColor(e.getEventType()))));
+            mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(setMarkerColor(e))));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
 
             // If event is a marriage, and the marriage line is on, draw lines!

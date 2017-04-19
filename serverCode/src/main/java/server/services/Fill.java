@@ -191,27 +191,18 @@ public class Fill {
 
         // Set death
         Event death = anonymousEvent();
-        death.setYear(Integer.toString(baseYear + lifeSpan));
+        int deathYear = baseYear - lifeSpan;
+        death.setYear("" + deathYear);
         death.setPerson(person.getPersonID());
         birth.setEventType(DEATH);
 
         // Set a random event (these usually work best from 20-59)
-        int year = generateRandomNumberBetween(20,59);
+        int year = baseYear - generateRandomNumberBetween(20,59);
         int randomEventIndex = generateRandomNumberBetween(0,randomEvents.length - 1);
         Event random = anonymousEvent();
-        random.setYear(Integer.toString(year));
+        random.setYear("" + year);
         random.setPerson(person.getPersonID());
         random.setEventType(randomEvents[randomEventIndex]);
-
-//        ArrayList<Event>events = new ArrayList<>();
-//        events.add(birth);
-//        events.add(death);
-//        events.add(random);
-//
-//        person.setEvents(events);
-//        db.openTransaction();
-//        db.persons.updatePerson(person.getPersonID(), person);
-//        db.closeTransaction(true);
 
 
         addEventToDB(birth);
@@ -262,7 +253,7 @@ public class Fill {
         husb.setSpouse(wife.getPersonID());
 
         // Pick a marriage year based on BYU's average... hahah
-        int marriageYear = baseYear + generateRandomNumberBetween(18,24);
+        int marriageYear = baseYear - generateRandomNumberBetween(18,24);
 
         // Pull random location from eventBank & create wife's marriage
         Event wifeMarriage = anonymousEvent();

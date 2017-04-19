@@ -117,13 +117,6 @@ public class SearchActivity extends AppCompatActivity{
          * @param match Item to be displayed
          */
         public void displayMatch(Searchable match){
-
-//            // Hook up fields in the view!
-//            mContainer = (RelativeLayout) findViewById(R.id.searchResults_layout);
-//            mSearchResultTitle = (TextView) findViewById(R.id.resultTitle);
-//            mSearchResultDescription = (TextView) findViewById(R.id.resultDescription);
-//            mIcon = (ImageView) findViewById(R.id.resultIcon);
-
             currentMatch = match;
             if(currentMatch != null){
                 if(currentMatch.getClass() == Event.class){
@@ -133,10 +126,6 @@ public class SearchActivity extends AppCompatActivity{
                     // Set string values
                     String eventTitle = event.getEventType() + ": " + event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
                     String eventPerson = event.getPerson();
-
-                    // Set text colors
-                    mSearchResultTitle.setTextColor(Color.BLACK);
-                    mSearchResultDescription.setTextColor(Color.BLACK);
 
                     // Set text values
                     mSearchResultTitle.setText(eventTitle);
@@ -150,9 +139,6 @@ public class SearchActivity extends AppCompatActivity{
 
                     // Set string values
                     String personName = person.getFirstName() + " " + person.getLastName();
-
-                    // Set text color
-                    mSearchResultTitle.setTextColor(Color.BLACK);
 
                     // Set text values
                     mSearchResultTitle.setText(personName);
