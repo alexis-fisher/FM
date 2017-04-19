@@ -10,13 +10,25 @@ import server.proxy.ClientException;
  * Created by Alyx on 4/15/17.
  */
 
+/**
+ * Downloads the Event and Person data from the Database
+ */
 public class ResyncTask extends AsyncTask<Caller, Integer, Boolean> {
+    /** Access the Model class */
     private Model model = Model.instanceOf();
+
+    /** The success or failure message (string) */
     private String dataReceivedToast;
+
+    /** Reference to the Activity/Fragment that called this */
     private Caller caller;
 
+
     protected Boolean doInBackground(Caller... urls) {
+        // Get Activity/Fragment
         this.caller = urls[0];
+
+        // Try to sync data
         try {
             if(!model.getPeopleFromServer()){
                 return false;
@@ -24,6 +36,8 @@ public class ResyncTask extends AsyncTask<Caller, Integer, Boolean> {
             if(!model.getEventsFromServer()){
                 return false;
             }
+
+            // If no errors, success!
             dataReceivedToast = "Resync complete";
         } catch (ClientException e){
             dataReceivedToast = e.getMessage();
@@ -36,10 +50,9 @@ public class ResyncTask extends AsyncTask<Caller, Integer, Boolean> {
     }
 
     protected void onPostExecute(Boolean success) {
+        // If no error message, tell the activity/fragment that syce was successful.
         if(dataReceivedToast != null && !dataReceivedToast.equals("")) {
             caller.printToast(dataReceivedToast);
-//            model.sortEventsByPerson();
-            caller.printToast("Sort Complete!");
 
         } else {
             caller.printToast("Internal server error. Could not sync data at this time.");

@@ -11,10 +11,10 @@
         android:inputType="text"
         android:id="@+id/searchField"
         android:hint="Enter search text here"/>
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchList"
         android:layout_gravity="center_horizontal|center_vertical">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

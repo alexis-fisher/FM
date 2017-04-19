@@ -13,14 +13,19 @@ import com.example.alyx.server.R;
 
 
 public class MainActivity extends FragmentActivity {
+    /** Login complete flag - set to true when login is complete... */
     private boolean loginComplete = false;
+
+    /** Toolbar (on top of screen) */
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Set UI to the MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // Set up fragment manager
         FragmentManager fm = getSupportFragmentManager();
         Fragment loginFragment = fm.findFragmentById(R.id.fragment_container);
 
@@ -40,13 +45,18 @@ public class MainActivity extends FragmentActivity {
 
     }
 
+    /**
+     * Sets login complete flag, activates toolbar and transitions to map
+     */
     public void loginComplete() {
+        // Set loginComplete flag to TRUE!
         loginComplete = true;
-//        Fragment mapFragment = new MapsFragment();
-//        fm.beginTransaction().add(R.id.fragment_container,mapFragment).commit();
+
+        // Go to map
         Intent intent = new Intent(MainActivity.this, MapActivity.class);
         startActivity(intent);
 
+        // Add in toolbar
         toolbar.inflateMenu(R.menu.menu_main);
 
     }

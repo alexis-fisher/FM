@@ -1,12 +1,10 @@
 package server.model;
 
-import java.util.ArrayList;
-
 /**
  * Created by Alyx on 2/17/17.
  */
 
-public class Person {
+public class Person implements Searchable {
     /** Unique identifier for this person */
     private String personID;
 
@@ -30,20 +28,6 @@ public class Person {
 
     /** Person’s spouse (possibly null) */
     private String spouse;
-
-//    public ArrayList<Event> getEvents() {
-//        return events;
-//    }
-//
-//    public void setEvents(ArrayList<Event> events) {
-//        this.events = events;
-//    }
-//
-//    private ArrayList<Event> events = new ArrayList<>();
-//
-//    public void addEvent(Event e){
-//        events.add(e);
-//    }
 
     /** Creates new Person object */
     public Person(){
@@ -129,5 +113,18 @@ public class Person {
 
     public void setSpouse(String spouse) {
         this.spouse = spouse;
+    }
+
+    @Override
+    public boolean contains(String term) {
+        // check first name
+        if(this.getFirstName().toLowerCase().contains(term.toLowerCase())){
+            return true;
+        }
+        // check last name
+        if(this.getLastName().toLowerCase().contains(term.toLowerCase())){
+            return true;
+        }
+        return false;
     }
 }

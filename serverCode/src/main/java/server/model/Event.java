@@ -4,15 +4,15 @@ package server.model;
  * Created by Alyx on 2/17/17.
  */
 
-public class Event implements Comparable {
+public class Event implements Comparable, Searchable {
     /** Unique identifier for this event */
     private String eventID;
 
-    /** User to which this person belongs */
+    /** User to which this personID belongs */
     private String descendant;
 
     /** Person to which this event belongs */
-    private String person;
+    private String personID;
 
     /** Latitude of event’s location */
     private String latitude;
@@ -36,7 +36,7 @@ public class Event implements Comparable {
     public Event(){
         eventID = "";
         descendant = "";
-        person = "";
+        personID = "";
         latitude = "";
         longitude = "";
         country = "";
@@ -62,11 +62,11 @@ public class Event implements Comparable {
     }
 
     public String getPerson() {
-        return person;
+        return personID;
     }
 
-    public void setPerson(String person) {
-        this.person = person;
+    public void setPerson(String personID) {
+        this.personID = personID;
     }
 
     public String getLatitude() {
@@ -114,6 +114,12 @@ public class Event implements Comparable {
         this.year = year;
     }
 
+    /**
+     * Compares events to each other. Criteria: Ordered chronologically, then by the first letter,
+     * then the event being compared (the param) is higher if it gets to that point.
+     * @param o Event to compare
+     * @return 1 if param is greater, -1 if param is lesser, 0 if equal or unable to compare.
+     */
     @Override
     public int compareTo(Object o) {
         if(o == null){
@@ -138,9 +144,33 @@ public class Event implements Comparable {
                 return 1;
             } else if (ev.getEventType().toLowerCase().charAt(0) < this.getEventType().toLowerCase().charAt(0)){
                 return -1;
-            } else { // close enough to alphabetic order for this app... ha.
+            } else { // close enough to alphabetic order for this... ha.
                 return 1;
             }
         }
+    }
+
+    @Override
+    public boolean contains(String term) {
+        // check event type
+        if(this.getEventType().toLowerCase().contains(term.toLowerCase())){
+            return true;
+        }
+
+        // check year
+        if(this.getYear().contains(term)){
+            return true;
+        }
+
+        // check city
+        if(this.getCity().toLowerCase().contains(term.toLowerCase())){
+            return true;
+        }
+
+        // check country
+        if(this.getCountry().toLowerCase().contains(term.toLowerCase())){
+            return true;
+        }
+        return false;
     }
 }

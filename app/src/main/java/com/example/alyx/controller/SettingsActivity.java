@@ -21,17 +21,12 @@ import com.example.alyx.server.R;
 
 public class SettingsActivity extends AppCompatActivity implements Caller {
 
-
-    public void resync(boolean toMapNext){
-        new ResyncTask().execute(this);
-
-    }
     @Override
     public FragmentManager getThisFragmentManager(){
         return getThisFragmentManager();
     }
 
-    // Access the settings for the app
+    /** Access the settings for the app */
     private Settings settings = Settings.instanceOf();
 
     // Switches
@@ -44,11 +39,6 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
     private Spinner mFamilyTreeLineSpinner;
     private Spinner mSpouseLineSpinner;
     private Spinner mMapSpinner;
-
-    // Colors
-    private final String red = "RED";
-    private final String green = "GREEN";
-    private final String blue = "BLUE";
 
     // Logout & Resync buttons
     private TextView mResync;
@@ -87,20 +77,20 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
         mLifeLinesSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settings.onOffLifeLines();
+                settings.toggleLifeLines();
             }
         });
         mFamilyTreeLinesSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settings.onOffFamilyTreeLines();
+                settings.toggleFamilyTreeLines();
 
             }
         });
         mSpouseLinesSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settings.onOffSpouseLines();
+                settings.toggleSpouseLines();
             }
         });
 
@@ -176,10 +166,18 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
     protected void onResume(){
         super.onResume();
     }
+
+    /**
+     * Navigates back to the LoginScreen
+     */
     private void toLoginScreen(){
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Navigates back to the Map
+     */
     private void backToMap(){
         Intent intent = new Intent(SettingsActivity.this, MapActivity.class);
         startActivity(intent);
@@ -191,8 +189,6 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
         outState.putInt("lifeLineSpinner", mLifeLineSpinner.getSelectedItemPosition());
         outState.putInt("spouseLineSpinner", mSpouseLineSpinner.getSelectedItemPosition());
         outState.putInt("familyTreeLineSpinner", mFamilyTreeLineSpinner.getSelectedItemPosition());
-        // do this for each or your Spinner
-        // You might consider using Bundle.putStringArray() instead
     }
 
 
@@ -210,5 +206,13 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    /**
+     * Resyncs data (person & event data), getting data from the database
+     * @param toMapNext boolean of whether or not to go to the map next.
+     */
+    public void resync(boolean toMapNext){
+        new ResyncTask().execute(this);
     }
 }

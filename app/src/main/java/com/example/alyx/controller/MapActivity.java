@@ -128,17 +128,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Map<String, Set<Event>> eventsByPerson = new HashMap<String,Set<Event>>();
         // Sort events by person for use by person activity
         events = model.getEvents();
-        for (Event e : events) {
-            // Get person associated with event
-            String personID = e.getPerson();
-            if (eventsByPerson.containsKey(personID)) {
-                eventsByPerson.get(personID).add(e);
-            } else {
-                eventsByPerson.put(personID, new TreeSet<Event>());
-                eventsByPerson.get(personID).add(e);
+        if(events != null) {
+            for (Event e : events) {
+                // Get person associated with event
+                String personID = e.getPerson();
+                if (eventsByPerson.containsKey(personID)) {
+                    eventsByPerson.get(personID).add(e);
+                } else {
+                    eventsByPerson.put(personID, new TreeSet<Event>());
+                    eventsByPerson.get(personID).add(e);
+                }
             }
+            model.setEventsByPerson(eventsByPerson);
         }
-        model.setEventsByPerson(eventsByPerson);
     }
     /**
      * Manipulates the map once available.

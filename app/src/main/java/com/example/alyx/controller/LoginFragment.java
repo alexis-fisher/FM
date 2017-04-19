@@ -188,7 +188,7 @@ public class LoginFragment extends Fragment implements Caller {
                 // put fields into a login request
                 if(putFieldsInLoginRequest()) {
 
-                    // ASYNC TASK!
+                    // LOGIN
                     new LoginTask().execute(LoginFragment.this);
                 }
 
@@ -200,7 +200,7 @@ public class LoginFragment extends Fragment implements Caller {
             public void onClick(View v){
                 // put fields into a register request
                 if(putFieldsInRegisterRequest()) {
-                    // ASYNC TASK!
+                    // REGISTER!
                     new RegisterTask().execute(LoginFragment.this);
                 }
 
@@ -211,24 +211,44 @@ public class LoginFragment extends Fragment implements Caller {
         return v;
     }
 
+    /**
+     * Prints the toast.
+     * @param toast String to print
+     */
     @Override
     public void printToast(String toast){
         Toast.makeText(getActivity(), toast, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Re-downloads the Person & Event data from the database
+     * @param toMapNext If true, will go to the MapFragment next. Else, will stay here.
+     */
     @Override
     public void resync(boolean toMapNext){
         new ResyncTask().execute(this);
     }
+
+    /**
+     * Returns the fragment manager
+     * @return the fragment manager
+     */
     @Override
     public FragmentManager getThisFragmentManager(){
         return getFragmentManager();
     }
 
+    /**
+     * Sets login complete, going to the Map.
+     */
     private void setLoginComplete() {
         ((MainActivity)getActivity()).loginComplete();
     }
 
+    /**
+     * Adds fields from the UI into a LoginRequest
+     * @return true if succeeded, false if there was missing UI data.
+     */
     private boolean putFieldsInLoginRequest(){
         if(userName.equals("")){
             Toast.makeText(getActivity(), "You forgot to enter your username", Toast.LENGTH_SHORT).show();
@@ -242,6 +262,10 @@ public class LoginFragment extends Fragment implements Caller {
         return false;
     }
 
+    /**
+     * Adds fields from the UI into a RegisterRequest
+     * @return true if succeeded, false if there was missing UI data.
+     */
     private boolean putFieldsInRegisterRequest(){
         if(userName.equals("")){
             Toast.makeText(getActivity(), "You forgot to enter your username", Toast.LENGTH_SHORT).show();
@@ -263,22 +287,37 @@ public class LoginFragment extends Fragment implements Caller {
         return false;
     }
 
-
+    /**
+     * Logs a user in and updates the database.
+     */
     public class LoginTask extends AsyncTask<Caller, Integer, Boolean> {
+        /** Login result, contains the result of the login attempt */
         private LoginResult loginResult = new LoginResult();
+        /** Access the model */
         private Model model = Model.instanceOf();
+
+        /** Access the database */
         private ServerProxy mProxy = ServerProxy.server();
-        private Caller caller;
+
+        /** Set the success/failure message */
         private String loginToast;
 
+        /** Activity/Fragment that called this task */
+        private Caller caller;
+
         protected Boolean doInBackground(Caller... urls) {
-            caller = urls[0];
+            // Get Activity
+            this.caller = urls[0];
+
+            // Login thru database
             try {
                 this.loginResult = mProxy.login(loginRequest);
             } catch (ClientException e){
                 loginResult.setMessage(e.getMessage());
                 return false;
             }
+
+            // If no error, set user in Model!
             if(loginResult.getMessage() == null || loginResult.getMessage().equals("")){
                 model.setCurrentUser(loginResult.getUserName());
                 return true;
@@ -293,33 +332,51 @@ public class LoginFragment extends Fragment implements Caller {
 
         protected void onPostExecute(Boolean success) {
             if(success){
+                // If success, print login succeed, sync data, and go to map!
                 loginToast = "Login succeeded!";
                 caller.printToast(loginToast);
                 setLoginComplete();
                 caller.resync(true);
             } else {
+                // If error, tell us about it!
                 caller.printToast(loginResult.getMessage());
-
             }
         }
     }
 
 
+    /**
+     * Registers a user and logs them in.
+     */
     public class RegisterTask extends AsyncTask<Caller, Integer, Boolean> {
+        /** Register result, contains the result of the register attempt */
         private RegisterResult registerResult = new RegisterResult();
+
+        /** Access the model */
         private Model model = Model.instanceOf();
+
+        /** Access the database */
         private ServerProxy mProxy = ServerProxy.server();
+
+        /** Set the success/failure message */
         private String registerToast;
+
+        /** Activity/Fragment that called this task */
         private Caller caller;
 
         protected Boolean doInBackground(Caller... urls) {
+            // Get Activity
             this.caller = urls[0];
+
+            // Register thru database
             try {
                 registerResult = mProxy.register(registerRequest);
             } catch (ClientException e){
                 registerResult.setMessage(e.getMessage());
                 return false;
             }
+
+            // If no error, set User in the model.
             if(registerResult.getMessage() == null || registerResult.getMessage().equals("")){
                 model.setCurrentUser(registerResult.getUserName());
                 return true;
@@ -333,12 +390,14 @@ public class LoginFragment extends Fragment implements Caller {
         }
 
         protected void onPostExecute(Boolean success) {
+            // If success, print register succeed, sync data, and go to map!
             if(success){
                 registerToast = "Register succeeded!";
                 caller.printToast(registerToast);
                 caller.resync(true);
                 setLoginComplete();
             } else {
+                // If error, tell us about it!
                 caller.printToast(registerResult.getMessage());
             }
         }

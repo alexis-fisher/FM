@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Family Map</string>
 
+    <!-- LOGIN FRAGMENT -->
     <string name="serverHost">Server Host:</string>
     <string name="serverPort">Server Port:</string>
     <string name="userName">User Name:</string>
@@ -19,6 +20,7 @@
     <string name="loginToast">Clicked the login button!\nGotcha!</string>
     <string name="registerToast">Clicked the register button!\nGotcha!</string>
 
+    <!-- SETTINGS ACTIVITY -->
     <string name="lifeStoryLinesHeader">Life Story Lines</string>
     <string name="lifeStoryLinesShow">SHOW LIFE STORY LINES</string>
     <string name="familyTreeLinesHeader">Family Tree Lines</string>
@@ -32,7 +34,7 @@
     <string name="logout">Logout</string>
     <string name="returnsToLoginScreen">RETURNS TO LOGIN SCREEN</string>
 
-
+    <!-- FILTER ACTIVITY -->
     <string name="birthEvents">Birth Events</string>
     <string name="birthEventsFilter">FILTER BY BIRTH EVENTS</string>
     <string name="deathEvents">Death Events</string>
@@ -92,5 +94,9 @@
         <item>Satellite</item>
         <item>Terrain</item>
     </string-array>
+
+    <!-- SEARCH ACTIVITY -->
+    <string name="resultTitle">Title</string>
+    <string name="resultDescription">Description</string>
 
 </resources>
