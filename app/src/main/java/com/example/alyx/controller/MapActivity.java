@@ -89,11 +89,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    //Change the ImageView image source depends on menu item click
-//                    case R.id.mapUpButton:
-////                        printToast("Map Clicked!");
-//                        toMapActivity();
-//                        return true;
                     case R.id.miSearch:
 //                        printToast("Search Clicked!");
                         toSearchActivity();
@@ -137,24 +132,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
     }
 
-    private void sortEventsByPerson(){
-        Map<String, Set<Event>> eventsByPerson = new HashMap<String,Set<Event>>();
-        // Sort events by person for use by person activity
-        events = model.getEvents();
-        if(events != null) {
-            for (Event e : events) {
-                // Get person associated with event
-                String personID = e.getPerson();
-                if (eventsByPerson.containsKey(personID)) {
-                    eventsByPerson.get(personID).add(e);
-                } else {
-                    eventsByPerson.put(personID, new TreeSet<Event>());
-                    eventsByPerson.get(personID).add(e);
-                }
-            }
-            model.setEventsByPerson(eventsByPerson);
-        }
-    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -330,7 +308,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     private void addEventMarkers(Event[] events){
-        sortEventsByPerson();
+        model.sortEventsByPerson();
         for(Event e : events) {
 
             if(e.getEventType() == null || e.getEventType().equals("") || e.getEventType().length() <= 0){

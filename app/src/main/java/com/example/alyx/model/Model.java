@@ -37,6 +37,14 @@ public class Model {
     // Map of Events, PersonID is the key.
     private Map<String, Set<Event>> eventsByPerson= new HashMap<String, Set<Event>>();
 
+    public Map<String, Set<Event>> getEventsByType() {
+        return eventsByType;
+    }
+
+    public void setEventsByType(Map<String, Set<Event>> eventsByType) {
+        this.eventsByType = eventsByType;
+    }
+
     // Map of Events, EventType is the key.
     private Map<String, Set<Event>> eventsByType = new HashMap<String,Set<Event>>();
 
@@ -161,6 +169,22 @@ public class Model {
             }
         }
 
+    }
+
+    public void sortEventsByPerson(){
+        // Sort events by person for use by person activity
+        if(events != null) {
+            for (Event e : events) {
+                // Get person associated with event
+                String personID = e.getPerson();
+                if (eventsByPerson.containsKey(personID)) {
+                    eventsByPerson.get(personID).add(e);
+                } else {
+                    eventsByPerson.put(personID, new TreeSet<Event>());
+                    eventsByPerson.get(personID).add(e);
+                }
+            }
+        }
     }
 
     public Event getEventSelected() {

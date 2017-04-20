@@ -173,4 +173,40 @@ public class Event implements Comparable, Searchable {
         }
         return false;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }
+        if(o.getClass() != Event.class){
+            return false;
+        }
+        if(o == this){
+            return true;
+        }
+        Event ev = (Event) o;
+
+        // Compare all fields
+        if(ev.getEventType().equals(this.getEventType())){
+            if(ev.getEventID().equals(this.getEventID())){
+                if(ev.getPerson().equals(this.getPerson())){
+                    if(ev.getCity().equals(this.getCity())){
+                        if(ev.getCountry().equals(this.getCountry())){
+                            if(ev.getDescendant().equals(this.getDescendant())){
+                                if(ev.getYear().equals(this.getYear())){
+                                    if(ev.getLatitude().equals(this.getLatitude())){
+                                        if(ev.getLongitude().equals(this.getLongitude())){
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

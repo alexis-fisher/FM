@@ -127,4 +127,38 @@ public class Person implements Searchable {
         }
         return false;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }
+        if(o.getClass() != Person.class){
+            return false;
+        }
+        if(o == this){
+            return true;
+        }
+        Person person = (Person) o;
+
+        // Compare all fields
+        if(person.getPersonID().equals(this.getPersonID())){
+            if(person.getDescendant().equals(this.getDescendant())){
+                if(person.getMother().equals(this.getMother())){
+                    if(person.getFather().equals(this.getFather())){
+                        if(person.getSpouse().equals(this.getSpouse())){
+                            if(person.getFirstName().equals(this.getFirstName())){
+                                if(person.getLastName().equals(this.getLastName())){
+                                    if(person.getGender().equals(this.getGender())){
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
