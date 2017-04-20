@@ -2,7 +2,6 @@ package com.example.alyx.controller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alyx.model.Model;
 import com.example.alyx.server.R;
@@ -72,7 +72,7 @@ public class SearchActivity extends AppCompatActivity{
         });
 
         // Set up search-er
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         search("");
 
     }
@@ -82,14 +82,14 @@ public class SearchActivity extends AppCompatActivity{
         List<Searchable>searchedData = model.search(term);
 
         // Load them into the adapter & display them!
-        adapter = new SearchAdapter(searchedData,getApplicationContext());
+        adapter = new SearchAdapter(searchedData,getBaseContext());
         mRecyclerView.setAdapter(adapter);
     }
 
     /**
      * Recycler view for the SearchActivity, displays the results of the Search.
      */
-    public class Results extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class Results extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener{
         private Searchable currentMatch;
         private TextView mSearchResultTitle;
         private TextView mSearchResultDescription;
@@ -101,14 +101,28 @@ public class SearchActivity extends AppCompatActivity{
         public Results(View view, Context context){
             super(view);
             this.context = context;
-            setContentView(R.layout.activity_search);
-
 
             // Hook up fields in the view!
-            mSearchResultTitle = (TextView) findViewById(R.id.resultTitle);
-            mSearchResultDescription = (TextView) findViewById(R.id.resultDescription);
-            mContainer = (RelativeLayout) findViewById(R.id.searchResults_layout);
-            mIcon = (ImageView) findViewById(R.id.resultIcon);
+            mSearchResultTitle = (TextView) view.findViewById(R.id.resultTitle);
+            mSearchResultDescription = (TextView) view.findViewById(R.id.resultDescription);
+            mContainer = (RelativeLayout) view.findViewById(R.id.searchResults_layout);
+            mIcon = (ImageView) view.findViewById(R.id.resultIcon);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(currentMatch != null){
+                        if(currentMatch.getClass() == Event.class){
+                            toEvent((Event) currentMatch);
+                        } else if(currentMatch.getClass() == Person.class){
+                            toPerson((Person) currentMatch);
+                        }
+                    } else {
+                        printToast("Clicked on a weird thing?");
+                    }
+                }
+            });
+
         }
 
 
@@ -129,7 +143,7 @@ public class SearchActivity extends AppCompatActivity{
 
                     // Set text values
                     mSearchResultTitle.setText(eventTitle);
-                    mSearchResultDescription.setText(eventPerson);
+                    mSearchResultDescription.setText('\n' + eventPerson);
 
                     // Set icon
                     mIcon.setImageDrawable(new IconDrawable(context, Iconify.IconValue.fa_map_marker).colorRes(R.color.colorPrimary));
@@ -161,8 +175,19 @@ public class SearchActivity extends AppCompatActivity{
                 } else if(currentMatch.getClass() == Person.class){
                     toPerson((Person) currentMatch);
                 }
+            } else {
+                printToast("Clicked on a weird thing?");
             }
         }
+
+        /**
+         * Prints toast.
+         * @param toast the message to print
+         */
+        public void printToast(String toast){
+            Toast.makeText(SearchActivity.this, toast, Toast.LENGTH_SHORT).show();
+        }
+
 
         /**
          * Navigates to the PersonActivity when a person is clicked.
@@ -190,7 +215,7 @@ public class SearchActivity extends AppCompatActivity{
      * The adapter class for my recycler view. Takes in a list of matches form the
      * search criteria and displays them in the Context (app context).
      */
-    public class SearchAdapter extends RecyclerView.Adapter<Results> {
+     private class SearchAdapter extends RecyclerView.Adapter<Results> {
         /** The List of matches for the search term */
         private List<Searchable> data;
         private Results searchResultPrinter;
@@ -209,7 +234,7 @@ public class SearchActivity extends AppCompatActivity{
         public Results onCreateViewHolder(ViewGroup parent, int viewType) {
             // Inflate layout and return the view
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            View view = layoutInflater.inflate(R.layout.item_search, parent, false);
+            View view = layoutInflater.inflate(R.layout.item_search_and_person, parent, false);
             return new Results(view, this.context);
         }
 

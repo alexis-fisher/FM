@@ -40,6 +40,17 @@ public class Model {
     // Map of Events, EventType is the key.
     private Map<String, Set<Event>> eventsByType = new HashMap<String,Set<Event>>();
 
+    public boolean isInflate() {
+        return inflate;
+    }
+
+    public void setInflate(boolean inflate) {
+        this.inflate = inflate;
+    }
+
+    // Inflate menu or not
+    private boolean inflate = true;
+
 
     // All person and event data from the database
     private Person[] persons;

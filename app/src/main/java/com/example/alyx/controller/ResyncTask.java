@@ -2,6 +2,7 @@ package com.example.alyx.controller;
 
 import android.os.AsyncTask;
 
+import com.example.alyx.model.Filter;
 import com.example.alyx.model.Model;
 
 import server.proxy.ClientException;
@@ -53,7 +54,6 @@ public class ResyncTask extends AsyncTask<Caller, Integer, Boolean> {
         // If no error message, tell the activity/fragment that syce was successful.
         if(dataReceivedToast != null && !dataReceivedToast.equals("")) {
             caller.printToast(dataReceivedToast);
-
         } else {
             caller.printToast("Internal server error. Could not sync data at this time.");
         }

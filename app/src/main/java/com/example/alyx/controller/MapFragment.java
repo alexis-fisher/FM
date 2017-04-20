@@ -89,7 +89,6 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
         for (Event e : events) {
             addEventMarker(e);
         }
-////                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin)));
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
         {
             @Override

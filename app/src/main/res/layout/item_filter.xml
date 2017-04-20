@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/filterLayout"
+    android:layout_height="50dip">
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/filterSwitch"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/filterSwitch"
+        android:id="@+id/resultTitle"
+        android:textColor="@color/colorPrimary"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/resultTitle"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/filterSwitch"
+        android:layout_below="@+id/resultTitle"
+        android:id="@+id/resultDescription"
+        android:text="@string/resultDescription"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorPrimary"/>
+
+</RelativeLayout>

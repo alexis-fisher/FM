@@ -172,6 +172,7 @@ public class SettingsActivity extends AppCompatActivity implements Caller {
      */
     private void toLoginScreen(){
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.example.alyx.model.Model;
 import com.example.alyx.server.R;
 
 
@@ -19,11 +20,15 @@ public class MainActivity extends FragmentActivity {
     /** Toolbar (on top of screen) */
     private Toolbar toolbar;
 
+    /** Access model class */
+    private Model model = Model.instanceOf();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set UI to the MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        model.setInflate(false);
 
         // Set up fragment manager
         FragmentManager fm = getSupportFragmentManager();
@@ -51,6 +56,8 @@ public class MainActivity extends FragmentActivity {
     public void loginComplete() {
         // Set loginComplete flag to TRUE!
         loginComplete = true;
+
+        model.setInflate(true);
 
         // Go to map
         Intent intent = new Intent(MainActivity.this, MapActivity.class);

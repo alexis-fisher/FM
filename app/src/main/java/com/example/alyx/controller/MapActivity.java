@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alyx.model.Filter;
 import com.example.alyx.model.Model;
 import com.example.alyx.model.Settings;
 import com.example.alyx.server.R;
@@ -29,8 +30,10 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,12 +52,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private Model model = Model.instanceOf();
     private Settings settings = Settings.instanceOf();
+    private Filter filters = Filter.instanceOf();
 
     // Event information displayed at the bottom
     private TextView mEventOwner;
     private TextView mEventInfo;
     private ImageView mGenderColor;
-
 
     private Person owner;
     private String ownerName;
@@ -62,7 +65,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private Toolbar toolbar;
 
-
+    private Set<String> personIDs = new TreeSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Family Map");
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.inflateMenu(R.menu.menu_main);
+        if(model.isInflate()) {
+            toolbar.inflateMenu(R.menu.menu_main);
+        }
+//        else {
+//            toolbar.inflateMenu(R.menu.menu_maps);
+//        }
 
 
 
@@ -82,6 +90,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     //Change the ImageView image source depends on menu item click
+//                    case R.id.mapUpButton:
+////                        printToast("Map Clicked!");
+//                        toMapActivity();
+//                        return true;
                     case R.id.miSearch:
 //                        printToast("Search Clicked!");
                         toSearchActivity();
@@ -190,6 +202,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private void toSettingsActivity(){
         Intent intent = new Intent(MapActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void toMapActivity(){
+        Intent intent = new Intent(MapActivity.this, MapActivity.class);
         startActivity(intent);
     }
 
@@ -320,17 +337,57 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 e.setEventType("birth");
             }
 
-            // Add a marker and move the camera
-            LatLng coordinates = new LatLng(Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()));
-            mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(setMarkerColor(e))));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
+
+            // Only add the events for which the filter is on!
+            Set <Filter.FilterOptions> filterOptions = filters.getFilters();
+            for(Filter.FilterOptions filter : filterOptions){
+                if(filter.getFilterType().equals(e.getEventType().toLowerCase())){
+                    if(filter.isOn()){
+                        // Add a marker and move the camera
+                        LatLng coordinates = new LatLng(Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()));
+                        mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(setMarkerColor(e))));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
+                    }
+                }
+            }
+
+//            // Add a marker and move the camera
+//            LatLng coordinates = new LatLng(Float.parseFloat(e.getLatitude()), Float.parseFloat(e.getLongitude()));
+//            mMap.addMarker(new MarkerOptions().position(coordinates).title(e.getEventID()).icon(BitmapDescriptorFactory.defaultMarker(setMarkerColor(e))));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
 
             // If event is a marriage, and the marriage line is on, draw lines!
             if(e.getEventType().equals("marriage") && settings.isShowSpouseLines()){
                 new GetSpouseBirthPlace().execute(e);
             }
+
+            // Adds person if they haven't been in the set yet
+            personIDs.add(e.getPerson());
+
         }
+
         model.setEvents(events);
+
+        if(settings.isShowLifeLines()){
+            // For each person
+            for(String person : personIDs){
+                // Make list for random access
+                List<Event> eventsInAList = new ArrayList<>();
+                // Add the life lines for the person
+                Set<Event> eventsForThisPerson = model.getEventsOf(person);
+                for(Event event : eventsForThisPerson){
+                    eventsInAList.add(event);
+                }
+
+                for(int i = 0; i < (eventsInAList.size() - 2); i++){
+                    if(eventsInAList.size() > (i + 1)) {
+                        LatLng event0 = new LatLng(Float.parseFloat(eventsInAList.get(i).getLatitude()), Float.parseFloat(eventsInAList.get(i).getLongitude()));
+                        LatLng event1 = new LatLng(Float.parseFloat(eventsInAList.get(i+1).getLatitude()), Float.parseFloat(eventsInAList.get(i+1).getLongitude()));
+                        drawLifeLine(event0, event1);
+                    }
+                }
+            }
+        }
 
     }
 
@@ -342,6 +399,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         }
         return null;
+    }
+
+    private void drawLifeLine(LatLng earlierCoords,LatLng laterCoords){
+        mMap.addPolyline(new PolylineOptions()
+                .add(earlierCoords,laterCoords)
+                .width(3)
+                .color(settings.getLifeLineColor()));
     }
 
     private void drawSpouseLine(LatLng marriageCoords,LatLng spouseBirthCoords){
